@@ -13,6 +13,9 @@
 		5ED2D7221B4F13AA00D32B62 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5ED2D7211B4F13AA00D32B62 /* Images.xcassets */; };
 		5ED2D7251B4F13AA00D32B62 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5ED2D7231B4F13AA00D32B62 /* LaunchScreen.xib */; };
 		5ED2D7311B4F13AA00D32B62 /* MSTumblrMenuTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ED2D7301B4F13AA00D32B62 /* MSTumblrMenuTests.swift */; };
+		5ED2D73B1B4F157500D32B62 /* MSTumblrMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ED2D73A1B4F157500D32B62 /* MSTumblrMenuViewController.swift */; };
+		5ED2D73D1B4F171700D32B62 /* AnimationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ED2D73C1B4F171700D32B62 /* AnimationController.swift */; };
+		5ED2D73F1B4F180500D32B62 /* TransitionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ED2D73E1B4F180500D32B62 /* TransitionManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,6 +39,9 @@
 		5ED2D72A1B4F13AA00D32B62 /* MSTumblrMenuTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MSTumblrMenuTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		5ED2D72F1B4F13AA00D32B62 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5ED2D7301B4F13AA00D32B62 /* MSTumblrMenuTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MSTumblrMenuTests.swift; sourceTree = "<group>"; };
+		5ED2D73A1B4F157500D32B62 /* MSTumblrMenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MSTumblrMenuViewController.swift; sourceTree = "<group>"; };
+		5ED2D73C1B4F171700D32B62 /* AnimationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimationController.swift; sourceTree = "<group>"; };
+		5ED2D73E1B4F180500D32B62 /* TransitionManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransitionManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -83,6 +89,9 @@
 				5ED2D7211B4F13AA00D32B62 /* Images.xcassets */,
 				5ED2D7231B4F13AA00D32B62 /* LaunchScreen.xib */,
 				5ED2D7181B4F13AA00D32B62 /* Supporting Files */,
+				5ED2D73A1B4F157500D32B62 /* MSTumblrMenuViewController.swift */,
+				5ED2D73C1B4F171700D32B62 /* AnimationController.swift */,
+				5ED2D73E1B4F180500D32B62 /* TransitionManager.swift */,
 			);
 			path = MSTumblrMenu;
 			sourceTree = "<group>";
@@ -212,6 +221,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5ED2D73B1B4F157500D32B62 /* MSTumblrMenuViewController.swift in Sources */,
+				5ED2D73F1B4F180500D32B62 /* TransitionManager.swift in Sources */,
+				5ED2D73D1B4F171700D32B62 /* AnimationController.swift in Sources */,
 				5ED2D71D1B4F13AA00D32B62 /* ViewController.swift in Sources */,
 				5ED2D71B1B4F13AA00D32B62 /* AppDelegate.swift in Sources */,
 			);
