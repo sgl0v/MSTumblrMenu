@@ -8,6 +8,16 @@
 
 import UIKit
 
-class MSTumblrMenuViewController: NSObject {
-   
+class MSTumblrMenuViewController: UIViewController {
+
+    @IBOutlet weak var menuItem1: MSMenuItem!
+    @IBOutlet weak var menuItem2: MSMenuItem!
+    @IBOutlet weak var menuItem3: MSMenuItem!
+
+    override func viewDidLoad() {
+//        let blurEffect = UIBlurEffect(style: .Light)
+//        let blurView = UIVisualEffectView(effect: blurEffect)
+//        blurView.setTranslatesAutoresizingMaskIntoConstraints(false)
+//        self.view.insertSubview(blurView, atIndex: 0)
+    }
 }
