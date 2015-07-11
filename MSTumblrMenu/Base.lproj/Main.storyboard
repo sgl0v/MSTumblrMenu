@@ -2,6 +2,8 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="vXZ-lx-hvc">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
@@ -36,39 +38,77 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
             </objects>
         </scene>
-        <!--View Controller-->
+        <!--Tumblr Menu View Controller-->
         <scene sceneID="3LD-jq-EWX">
             <objects>
-                <viewController id="ZER-vi-krT" sceneMemberID="viewController">
+                <viewController id="ZER-vi-krT" customClass="MSTumblrMenuViewController" customModule="MSTumblrMenu" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="ZbK-WJ-lUz"/>
                         <viewControllerLayoutGuide type="bottom" id="BIK-xy-RN0"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="wLk-07-OdR">
+                    <view key="view" opaque="NO" contentMode="scaleToFill" id="wLk-07-OdR">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rEQ-1Y-tF5">
-                                <rect key="frame" x="296" y="560" width="32" height="30"/>
-                                <state key="normal" title="Hide">
+                                <rect key="frame" x="286" y="560" width="52" height="30"/>
+                                <state key="normal" title="dismiss">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
                                     <segue destination="7NK-Yo-zmR" kind="unwind" unwindAction="unwindToViewController:" id="Bsz-jO-q9g"/>
                                 </connections>
                             </button>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fUo-vJ-gLd" customClass="MSMenuItem" customModule="MSTumblrMenu" customModuleProvider="target">
+                                <rect key="frame" x="219" y="80" width="162" height="162"/>
+                                <color key="backgroundColor" red="0.5" green="0.0" blue="0.5" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="fUo-vJ-gLd" secondAttribute="height" multiplier="1:1" id="3tl-aA-M4a"/>
+                                </constraints>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aa0-zt-8Zu" customClass="MSMenuItem" customModule="MSTumblrMenu" customModuleProvider="target">
+                                <rect key="frame" x="401" y="80" width="163" height="162"/>
+                                <color key="backgroundColor" red="0.0" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="aa0-zt-8Zu" secondAttribute="height" multiplier="1:1" id="ava-VA-dsu"/>
+                                </constraints>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OVZ-As-U1B" customClass="MSMenuItem" customModule="MSTumblrMenu" customModuleProvider="target">
+                                <rect key="frame" x="36" y="80" width="163" height="162"/>
+                                <color key="backgroundColor" red="0.0" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="OVZ-As-U1B" secondAttribute="height" multiplier="1:1" id="eEO-iq-3tC"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="BIK-xy-RN0" firstAttribute="top" secondItem="rEQ-1Y-tF5" secondAttribute="bottom" constant="10" id="28a-PR-yWz"/>
+                            <constraint firstAttribute="centerY" secondItem="OVZ-As-U1B" secondAttribute="centerY" constant="139" id="3OL-jC-xQx"/>
+                            <constraint firstItem="aa0-zt-8Zu" firstAttribute="width" secondItem="fUo-vJ-gLd" secondAttribute="width" id="A7u-bQ-qaD"/>
+                            <constraint firstAttribute="centerY" secondItem="fUo-vJ-gLd" secondAttribute="centerY" constant="139" id="BFG-Qz-huZ"/>
+                            <constraint firstItem="OVZ-As-U1B" firstAttribute="width" secondItem="fUo-vJ-gLd" secondAttribute="width" id="QDE-IR-TOg"/>
+                            <constraint firstAttribute="centerY" secondItem="aa0-zt-8Zu" secondAttribute="centerY" constant="139" id="Z10-d4-Say"/>
+                            <constraint firstItem="fUo-vJ-gLd" firstAttribute="width" secondItem="fUo-vJ-gLd" secondAttribute="height" multiplier="1:1" id="d1P-48-Hf4"/>
+                            <constraint firstItem="aa0-zt-8Zu" firstAttribute="leading" secondItem="fUo-vJ-gLd" secondAttribute="trailing" constant="20" id="eUY-O0-LR2"/>
+                            <constraint firstItem="aa0-zt-8Zu" firstAttribute="width" secondItem="aa0-zt-8Zu" secondAttribute="height" multiplier="1:1" id="jJL-Q9-hob"/>
+                            <constraint firstItem="fUo-vJ-gLd" firstAttribute="leading" secondItem="OVZ-As-U1B" secondAttribute="trailing" constant="20" id="led-VT-pUT"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="aa0-zt-8Zu" secondAttribute="trailing" constant="20" id="m54-EE-Hoa"/>
+                            <constraint firstItem="OVZ-As-U1B" firstAttribute="leading" secondItem="wLk-07-OdR" secondAttribute="leadingMargin" constant="20" id="obq-Ii-RMA"/>
                             <constraint firstAttribute="centerX" secondItem="rEQ-1Y-tF5" secondAttribute="centerX" constant="-12" id="omA-oy-3GU"/>
+                            <constraint firstItem="aa0-zt-8Zu" firstAttribute="width" secondItem="aa0-zt-8Zu" secondAttribute="height" multiplier="1:1" id="rAx-VO-CSv"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="menuItem1" destination="OVZ-As-U1B" id="PaZ-cX-3a7"/>
+                        <outlet property="menuItem2" destination="fUo-vJ-gLd" id="meo-Ib-U3G"/>
+                        <outlet property="menuItem3" destination="aa0-zt-8Zu" id="y9M-ci-1y8"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="p3H-7f-ezN" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="7NK-Yo-zmR" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="1118" y="457"/>
+            <point key="canvasLocation" x="1156" y="456"/>
         </scene>
     </scenes>
 </document>

@@ -14,8 +14,10 @@
 		5ED2D7251B4F13AA00D32B62 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5ED2D7231B4F13AA00D32B62 /* LaunchScreen.xib */; };
 		5ED2D7311B4F13AA00D32B62 /* MSTumblrMenuTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ED2D7301B4F13AA00D32B62 /* MSTumblrMenuTests.swift */; };
 		5ED2D73B1B4F157500D32B62 /* MSTumblrMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ED2D73A1B4F157500D32B62 /* MSTumblrMenuViewController.swift */; };
-		5ED2D73D1B4F171700D32B62 /* AnimationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ED2D73C1B4F171700D32B62 /* AnimationController.swift */; };
-		5ED2D73F1B4F180500D32B62 /* TransitionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ED2D73E1B4F180500D32B62 /* TransitionManager.swift */; };
+		5ED2D73D1B4F171700D32B62 /* MSTumblrMenuAnimationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ED2D73C1B4F171700D32B62 /* MSTumblrMenuAnimationController.swift */; };
+		5ED2D73F1B4F180500D32B62 /* MSTumblrMenuTransitioningDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ED2D73E1B4F180500D32B62 /* MSTumblrMenuTransitioningDelegate.swift */; };
+		5ED2D7421B504F3600D32B62 /* UIViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ED2D7411B504F3600D32B62 /* UIViewExtension.swift */; };
+		5ED2D7441B50533000D32B62 /* MSMenuItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ED2D7431B50533000D32B62 /* MSMenuItem.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,8 +42,10 @@
 		5ED2D72F1B4F13AA00D32B62 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5ED2D7301B4F13AA00D32B62 /* MSTumblrMenuTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MSTumblrMenuTests.swift; sourceTree = "<group>"; };
 		5ED2D73A1B4F157500D32B62 /* MSTumblrMenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MSTumblrMenuViewController.swift; sourceTree = "<group>"; };
-		5ED2D73C1B4F171700D32B62 /* AnimationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimationController.swift; sourceTree = "<group>"; };
-		5ED2D73E1B4F180500D32B62 /* TransitionManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransitionManager.swift; sourceTree = "<group>"; };
+		5ED2D73C1B4F171700D32B62 /* MSTumblrMenuAnimationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MSTumblrMenuAnimationController.swift; sourceTree = "<group>"; };
+		5ED2D73E1B4F180500D32B62 /* MSTumblrMenuTransitioningDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MSTumblrMenuTransitioningDelegate.swift; sourceTree = "<group>"; };
+		5ED2D7411B504F3600D32B62 /* UIViewExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewExtension.swift; sourceTree = "<group>"; };
+		5ED2D7431B50533000D32B62 /* MSMenuItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MSMenuItem.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -90,8 +94,10 @@
 				5ED2D7231B4F13AA00D32B62 /* LaunchScreen.xib */,
 				5ED2D7181B4F13AA00D32B62 /* Supporting Files */,
 				5ED2D73A1B4F157500D32B62 /* MSTumblrMenuViewController.swift */,
-				5ED2D73C1B4F171700D32B62 /* AnimationController.swift */,
-				5ED2D73E1B4F180500D32B62 /* TransitionManager.swift */,
+				5ED2D73C1B4F171700D32B62 /* MSTumblrMenuAnimationController.swift */,
+				5ED2D73E1B4F180500D32B62 /* MSTumblrMenuTransitioningDelegate.swift */,
+				5ED2D7411B504F3600D32B62 /* UIViewExtension.swift */,
+				5ED2D7431B50533000D32B62 /* MSMenuItem.swift */,
 			);
 			path = MSTumblrMenu;
 			sourceTree = "<group>";
@@ -221,9 +227,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5ED2D7421B504F3600D32B62 /* UIViewExtension.swift in Sources */,
 				5ED2D73B1B4F157500D32B62 /* MSTumblrMenuViewController.swift in Sources */,
-				5ED2D73F1B4F180500D32B62 /* TransitionManager.swift in Sources */,
-				5ED2D73D1B4F171700D32B62 /* AnimationController.swift in Sources */,
+				5ED2D7441B50533000D32B62 /* MSMenuItem.swift in Sources */,
+				5ED2D73F1B4F180500D32B62 /* MSTumblrMenuTransitioningDelegate.swift in Sources */,
+				5ED2D73D1B4F171700D32B62 /* MSTumblrMenuAnimationController.swift in Sources */,
 				5ED2D71D1B4F13AA00D32B62 /* ViewController.swift in Sources */,
 				5ED2D71B1B4F13AA00D32B62 /* AppDelegate.swift in Sources */,
 			);
@@ -352,9 +360,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = MSTumblrMenu/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
@@ -362,6 +372,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = MSTumblrMenu/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
