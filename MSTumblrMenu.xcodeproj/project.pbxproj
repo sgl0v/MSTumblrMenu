@@ -17,7 +17,9 @@
 		5ED2D73D1B4F171700D32B62 /* MSTumblrMenuAnimationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ED2D73C1B4F171700D32B62 /* MSTumblrMenuAnimationController.swift */; };
 		5ED2D73F1B4F180500D32B62 /* MSTumblrMenuTransitioningDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ED2D73E1B4F180500D32B62 /* MSTumblrMenuTransitioningDelegate.swift */; };
 		5ED2D7421B504F3600D32B62 /* UIViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ED2D7411B504F3600D32B62 /* UIViewExtension.swift */; };
-		5ED2D7441B50533000D32B62 /* MSMenuItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ED2D7431B50533000D32B62 /* MSMenuItem.swift */; };
+		5ED2D7441B50533000D32B62 /* MSTumblrMenuCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ED2D7431B50533000D32B62 /* MSTumblrMenuCell.swift */; };
+		5ED2D7461B54661000D32B62 /* MSTumblrMenuFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ED2D7451B54661000D32B62 /* MSTumblrMenuFlowLayout.swift */; };
+		5ED2D7471B54661000D32B62 /* MSTumblrMenuFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ED2D7451B54661000D32B62 /* MSTumblrMenuFlowLayout.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -45,7 +47,8 @@
 		5ED2D73C1B4F171700D32B62 /* MSTumblrMenuAnimationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MSTumblrMenuAnimationController.swift; sourceTree = "<group>"; };
 		5ED2D73E1B4F180500D32B62 /* MSTumblrMenuTransitioningDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MSTumblrMenuTransitioningDelegate.swift; sourceTree = "<group>"; };
 		5ED2D7411B504F3600D32B62 /* UIViewExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewExtension.swift; sourceTree = "<group>"; };
-		5ED2D7431B50533000D32B62 /* MSMenuItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MSMenuItem.swift; sourceTree = "<group>"; };
+		5ED2D7431B50533000D32B62 /* MSTumblrMenuCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MSTumblrMenuCell.swift; sourceTree = "<group>"; };
+		5ED2D7451B54661000D32B62 /* MSTumblrMenuFlowLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MSTumblrMenuFlowLayout.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -96,8 +99,9 @@
 				5ED2D73A1B4F157500D32B62 /* MSTumblrMenuViewController.swift */,
 				5ED2D73C1B4F171700D32B62 /* MSTumblrMenuAnimationController.swift */,
 				5ED2D73E1B4F180500D32B62 /* MSTumblrMenuTransitioningDelegate.swift */,
+				5ED2D7451B54661000D32B62 /* MSTumblrMenuFlowLayout.swift */,
 				5ED2D7411B504F3600D32B62 /* UIViewExtension.swift */,
-				5ED2D7431B50533000D32B62 /* MSMenuItem.swift */,
+				5ED2D7431B50533000D32B62 /* MSTumblrMenuCell.swift */,
 			);
 			path = MSTumblrMenu;
 			sourceTree = "<group>";
@@ -227,9 +231,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5ED2D7461B54661000D32B62 /* MSTumblrMenuFlowLayout.swift in Sources */,
 				5ED2D7421B504F3600D32B62 /* UIViewExtension.swift in Sources */,
 				5ED2D73B1B4F157500D32B62 /* MSTumblrMenuViewController.swift in Sources */,
-				5ED2D7441B50533000D32B62 /* MSMenuItem.swift in Sources */,
+				5ED2D7441B50533000D32B62 /* MSTumblrMenuCell.swift in Sources */,
 				5ED2D73F1B4F180500D32B62 /* MSTumblrMenuTransitioningDelegate.swift in Sources */,
 				5ED2D73D1B4F171700D32B62 /* MSTumblrMenuAnimationController.swift in Sources */,
 				5ED2D71D1B4F13AA00D32B62 /* ViewController.swift in Sources */,
@@ -241,6 +246,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5ED2D7471B54661000D32B62 /* MSTumblrMenuFlowLayout.swift in Sources */,
 				5ED2D7311B4F13AA00D32B62 /* MSTumblrMenuTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
