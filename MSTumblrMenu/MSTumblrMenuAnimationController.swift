@@ -26,25 +26,25 @@ class MSTumblrMenuAnimationController: NSObject, UIViewControllerAnimatedTransit
     private func prepareForPresentingViewController(menuViewController: MSTumblrMenuViewController) {
         menuViewController.view.alpha = 0.0
 
-        menuViewController.menuItem1.transform = CGAffineTransformMakeTranslation(0.0, maxOffset)
-        menuViewController.menuItem2.transform = CGAffineTransformMakeTranslation(0.0, minOffset)
-        menuViewController.menuItem3.transform = CGAffineTransformMakeTranslation(0.0, maxOffset)
+//        menuViewController.menuItem1.transform = CGAffineTransformMakeTranslation(0.0, maxOffset)
+//        menuViewController.menuItem2.transform = CGAffineTransformMakeTranslation(0.0, minOffset)
+//        menuViewController.menuItem3.transform = CGAffineTransformMakeTranslation(0.0, maxOffset)
     }
 
     private func presentViewController(menuViewController: MSTumblrMenuViewController) {
         menuViewController.view.alpha = 1.0
 
-        menuViewController.menuItem1.transform = CGAffineTransformIdentity
-        menuViewController.menuItem2.transform = CGAffineTransformIdentity
-        menuViewController.menuItem3.transform = CGAffineTransformIdentity
+//        menuViewController.menuItem1.transform = CGAffineTransformIdentity
+//        menuViewController.menuItem2.transform = CGAffineTransformIdentity
+//        menuViewController.menuItem3.transform = CGAffineTransformIdentity
     }
 
     private func dismissViewController(menuViewController: MSTumblrMenuViewController) {
         menuViewController.view.alpha = 0.0
 
-        menuViewController.menuItem1.transform = CGAffineTransformMakeTranslation(0.0, -minOffset)
-        menuViewController.menuItem2.transform = CGAffineTransformMakeTranslation(0.0, -maxOffset)
-        menuViewController.menuItem3.transform = CGAffineTransformMakeTranslation(0.0, -minOffset)
+//        menuViewController.menuItem1.transform = CGAffineTransformMakeTranslation(0.0, -minOffset)
+//        menuViewController.menuItem2.transform = CGAffineTransformMakeTranslation(0.0, -maxOffset)
+//        menuViewController.menuItem3.transform = CGAffineTransformMakeTranslation(0.0, -minOffset)
     }
 
 }
