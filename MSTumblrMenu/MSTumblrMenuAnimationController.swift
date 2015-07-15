@@ -32,7 +32,9 @@ class MSTumblrMenuAnimationController: NSObject, UIViewControllerAnimatedTransit
     }
 
     private func presentViewController(menuViewController: MSTumblrMenuViewController) {
-        menuViewController.view.alpha = 1.0
+        menuViewController.view.alpha = 0.5
+        
+        menuViewController.addItems()
 
 //        menuViewController.menuItem1.transform = CGAffineTransformIdentity
 //        menuViewController.menuItem2.transform = CGAffineTransformIdentity

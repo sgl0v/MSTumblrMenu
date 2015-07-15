@@ -11,12 +11,29 @@ import UIKit
 class MSTumblrMenuViewController: UICollectionViewController {
 
     static let kMenuCellIdentifier = "MenuCellIdentifier"
+    var numberOfSections = 1
+    var numberOfItems = 0
 
     override func viewDidLoad() {
 //        let blurEffect = UIBlurEffect(style: .Light)
 //        let blurView = UIVisualEffectView(effect: blurEffect)
 //        blurView.setTranslatesAutoresizingMaskIntoConstraints(false)
 //        self.view.insertSubview(blurView, atIndex: 0)
+    }
+
+    func addItems() {
+        var items = [NSIndexPath]()
+        for section in 0..<1 {
+            for item in 0..<3 {
+                items.append(NSIndexPath(forRow: item, inSection: section))
+            }
+        }
+        self.collectionView?.performBatchUpdates({
+//            self.collectionView?.insertSections(NSIndexSet(indexesInRange: NSMakeRange(0, 1)))
+            self.collectionView?.insertItemsAtIndexPaths(items)
+//            self.numberOfSections = 1
+            self.numberOfItems = 3
+        }, completion: nil)
     }
 
 //    override func viewDidLayoutSubviews() {
@@ -26,11 +43,11 @@ class MSTumblrMenuViewController: UICollectionViewController {
     // MARK: UICollectionViewControllerDataSource methods
 
     override func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
-        return 2
+        return self.numberOfSections
     }
 
     override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 3
+        return self.numberOfItems
     }
 
     override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
@@ -38,31 +55,36 @@ class MSTumblrMenuViewController: UICollectionViewController {
         return menuCell
     }
 
-    // MARK: UICollectionViewControllerDelegate methods
-
 }
 
-extension MSTumblrMenuViewController: UICollectionViewDelegateFlowLayout {
+//extension MSTumblrMenuViewController: UICollectionViewDelegateFlowLayout
+//{
+//    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
+//        return CGSizeMake(100, 100)
+//    }
+//}
 
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-        let cellSpacing: CGFloat = 20.0
-        let width: CGFloat = CGRectGetWidth(collectionView.bounds)
-        let numberOfItems: CGFloat = CGFloat(collectionView.dataSource!.collectionView(self.collectionView!, numberOfItemsInSection: indexPath.section))
-        let cellWidth = (width - (numberOfItems + 1) * cellSpacing) / numberOfItems
-        return CGSizeMake(cellWidth, cellWidth)
-    }
-
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAtIndex section: Int) -> CGFloat {
-        return 20.0
-    }
-
-//    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAtIndex section: Int) -> CGFloat {
+//extension MSTumblrMenuViewController: UICollectionViewDelegateFlowLayout {
+//
+//    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
+//        let cellSpacing: CGFloat = 20.0
+//        let width: CGFloat = CGRectGetWidth(collectionView.bounds)
+//        let numberOfItems: CGFloat = CGFloat(collectionView.dataSource!.collectionView(self.collectionView!, numberOfItemsInSection: indexPath.section))
+//        let cellWidth = (width - (numberOfItems + 1) * cellSpacing) / numberOfItems
+//        return CGSizeMake(cellWidth, cellWidth)
+//    }
+//
+//    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAtIndex section: Int) -> CGFloat {
 //        return 20.0
 //    }
-
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets {
-        return UIEdgeInsetsMake(20.0, 20.0, 0.0, 20.0)
-    }
-
-
-}
+//
+////    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAtIndex section: Int) -> CGFloat {
+////        return 20.0
+////    }
+//
+//    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets {
+//        return UIEdgeInsetsMake(20.0, 20.0, 0.0, 20.0)
+//    }
+//
+//
+//}

@@ -10,6 +10,63 @@ import UIKit
 
 class MSTumblrMenuFlowLayout: UICollectionViewFlowLayout {
 
+    var dynamicAnimator: UIDynamicAnimator!
+    let cellSize = CGSizeMake(100, 100)
+    let cellSpace: CGFloat = 20.0
+
+    required override init() {
+        super.init()
+        self.dynamicAnimator = UIDynamicAnimator(collectionViewLayout: self)
+    }
+
+    required init(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        self.dynamicAnimator = UIDynamicAnimator(collectionViewLayout: self)
+    }
+
+    override func layoutAttributesForElementsInRect(rect: CGRect) -> [AnyObject]? {
+        return self.dynamicAnimator.itemsInRect(rect)
+    }
+
+    override func layoutAttributesForItemAtIndexPath(indexPath: NSIndexPath) -> UICollectionViewLayoutAttributes! {
+        if let attrs = self.dynamicAnimator.layoutAttributesForCellAtIndexPath(indexPath) {
+            return attrs
+        }
+        return super.layoutAttributesForItemAtIndexPath(indexPath)
+    }
+
+    override func collectionViewContentSize() -> CGSize {
+        if let collectionView = self.collectionView {
+            return collectionView.bounds.size
+        } else {
+            return CGSizeZero
+        }
+    }
+
+    override func initialLayoutAttributesForAppearingItemAtIndexPath(itemIndexPath: NSIndexPath) -> UICollectionViewLayoutAttributes? {
+        var attrs = UICollectionViewLayoutAttributes(forCellWithIndexPath: itemIndexPath)
+        attrs.size = cellSize
+        attrs.center = CGPointMake(CGFloat(itemIndexPath.row) * (cellSize.width + cellSpace) + cellSize.width / 2, self.collectionViewContentSize().height + CGFloat(itemIndexPath.section) * (cellSize.height + cellSpace) + cellSize.height / 2)
+        return attrs
+    }
+
+    override func prepareForCollectionViewUpdates(updateItems: [AnyObject]!) {
+        super.prepareForCollectionViewUpdates(updateItems)
+        for updateItem in updateItems {
+            let updateAction = updateItem.updateAction!
+            if updateAction == .Insert {
+                let indexPath: NSIndexPath = (updateItem as! UICollectionViewUpdateItem).indexPathAfterUpdate!
+                var attrs = UICollectionViewLayoutAttributes(forCellWithIndexPath: indexPath)
+                attrs.size = cellSize
+                let center = CGPointMake(CGFloat(indexPath.row) * (cellSize.width + cellSpace) + cellSize.width / 2, CGFloat(indexPath.section) * (cellSize.height + cellSpace) + cellSize.height / 2)
+                var snapBehaviour = UISnapBehavior(item: attrs, snapToPoint: center)
+                snapBehaviour.damping = 0.7
+                self.dynamicAnimator.addBehavior(snapBehaviour)
+            }
+        }
+    }
+
+
 //    var layoutAttributes = Array<Array<UICollectionViewLayoutAttributes>>()
 //
 //
@@ -45,7 +102,7 @@ class MSTumblrMenuFlowLayout: UICollectionViewFlowLayout {
 //    }
 
     override func shouldInvalidateLayoutForBoundsChange(newBounds: CGRect) -> Bool {
-        return true
+        return false
     }
 
     // MARK: Private
