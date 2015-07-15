@@ -22,6 +22,12 @@ class ViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
 
+    @IBAction func showMenu(sender: UIButton) {
+        let controller = MSTumblrMenuViewController(collectionViewLayout: MSTumblrMenuFlowLayout())
+        controller.transitioningDelegate = self.menuTransitioningDelegate
+        self.presentViewController(controller, animated: true, completion: nil)
+    }
+
     @IBAction func unwindToViewController(sender: UIStoryboardSegue) {
         
     }

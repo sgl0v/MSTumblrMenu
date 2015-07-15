@@ -11,19 +11,27 @@ import UIKit
 class MSTumblrMenuViewController: UICollectionViewController {
 
     static let kMenuCellIdentifier = "MenuCellIdentifier"
-    var numberOfSections = 1
+    var numberOfSections = 2
     var numberOfItems = 0
 
     override func viewDidLoad() {
+        self.collectionView?.registerClass(MSTumblrMenuCell.self, forCellWithReuseIdentifier: MSTumblrMenuViewController.kMenuCellIdentifier)
+
+        var gestureRecognizer = UITapGestureRecognizer(target: self, action: "dismissViewController:")
+        self.collectionView?.addGestureRecognizer(gestureRecognizer)
 //        let blurEffect = UIBlurEffect(style: .Light)
 //        let blurView = UIVisualEffectView(effect: blurEffect)
 //        blurView.setTranslatesAutoresizingMaskIntoConstraints(false)
 //        self.view.insertSubview(blurView, atIndex: 0)
     }
 
+    func dismissViewController(sender: AnyObject) {
+        self.dismissViewControllerAnimated(true, completion: nil)
+    }
+
     func addItems() {
         var items = [NSIndexPath]()
-        for section in 0..<1 {
+        for section in 0..<2 {
             for item in 0..<3 {
                 items.append(NSIndexPath(forRow: item, inSection: section))
             }
