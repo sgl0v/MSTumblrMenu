@@ -8,15 +8,19 @@
 
 import UIKit
 
-class MSTumblrMenuFlowLayout: UICollectionViewFlowLayout {
+class MSTumblrMenuFlowLayout: UICollectionViewLayout {
 
     var dynamicAnimator: UIDynamicAnimator!
+    var collisionBehavior: UICollisionBehavior!
     let cellSize = CGSizeMake(100, 100)
     let cellSpace: CGFloat = 20.0
 
     required override init() {
         super.init()
         self.dynamicAnimator = UIDynamicAnimator(collectionViewLayout: self)
+        self.dynamicAnimator.delegate = self
+        self.collisionBehavior = UICollisionBehavior()
+        self.dynamicAnimator.addBehavior(self.collisionBehavior)
     }
 
     required init(coder aDecoder: NSCoder) {
@@ -32,7 +36,11 @@ class MSTumblrMenuFlowLayout: UICollectionViewFlowLayout {
         if let attrs = self.dynamicAnimator.layoutAttributesForCellAtIndexPath(indexPath) {
             return attrs
         }
-        return super.layoutAttributesForItemAtIndexPath(indexPath)
+        var attrs = UICollectionViewLayoutAttributes(forCellWithIndexPath: indexPath)
+        attrs.size = self.cellSize
+        attrs.center = CGPointMake(CGFloat(indexPath.row) * (cellSize.width + cellSpace) + cellSize.width / 2, CGFloat(indexPath.section) * (cellSize.height + cellSpace) + cellSize.height / 2)
+        return attrs
+//        return super.layoutAttributesForItemAtIndexPath(indexPath)
     }
 
     override func collectionViewContentSize() -> CGSize {
@@ -45,7 +53,7 @@ class MSTumblrMenuFlowLayout: UICollectionViewFlowLayout {
 
     override func initialLayoutAttributesForAppearingItemAtIndexPath(itemIndexPath: NSIndexPath) -> UICollectionViewLayoutAttributes? {
         var attrs = UICollectionViewLayoutAttributes(forCellWithIndexPath: itemIndexPath)
-        attrs.size = cellSize
+        attrs.size = self.cellSize
         attrs.center = CGPointMake(CGFloat(itemIndexPath.row) * (cellSize.width + cellSpace) + cellSize.width / 2, self.collectionViewContentSize().height + CGFloat(itemIndexPath.section) * (cellSize.height + cellSpace) + cellSize.height / 2)
         return attrs
     }
@@ -57,11 +65,13 @@ class MSTumblrMenuFlowLayout: UICollectionViewFlowLayout {
             if updateAction == .Insert {
                 let indexPath: NSIndexPath = (updateItem as! UICollectionViewUpdateItem).indexPathAfterUpdate!
                 var attrs = UICollectionViewLayoutAttributes(forCellWithIndexPath: indexPath)
-                attrs.size = cellSize
+                attrs.size = self.cellSize
                 let center = CGPointMake(CGFloat(indexPath.row) * (cellSize.width + cellSpace) + cellSize.width / 2, CGFloat(indexPath.section) * (cellSize.height + cellSpace) + cellSize.height / 2)
+                attrs.center = center
                 var snapBehaviour = UISnapBehavior(item: attrs, snapToPoint: center)
                 snapBehaviour.damping = 0.7
                 self.dynamicAnimator.addBehavior(snapBehaviour)
+                self.collisionBehavior.addItem(attrs)
             }
         }
     }
@@ -101,9 +111,16 @@ class MSTumblrMenuFlowLayout: UICollectionViewFlowLayout {
 //        return self.layoutAttributes[indexPath.section][indexPath.row]
 //    }
 
-    override func shouldInvalidateLayoutForBoundsChange(newBounds: CGRect) -> Bool {
-        return false
-    }
+//    override func shouldInvalidateLayoutForBoundsChange(newBounds: CGRect) -> Bool {
+//        return false
+//    }
 
     // MARK: Private
+}
+
+extension MSTumblrMenuFlowLayout: UIDynamicAnimatorDelegate {
+
+    func dynamicAnimatorDidPause(animator: UIDynamicAnimator) {
+        // send the callback
+    }
 }
