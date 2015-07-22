@@ -12,6 +12,7 @@ class MSTumblrMenuFlowLayout: UICollectionViewLayout {
 
     var dynamicAnimator: UIDynamicAnimator!
     var collisionBehavior: UICollisionBehavior!
+    var gravityBehaviour: UIGravityBehavior!
     let cellSize = CGSizeMake(100, 100)
     let cellSpace: CGFloat = 20.0
 
@@ -20,6 +21,8 @@ class MSTumblrMenuFlowLayout: UICollectionViewLayout {
         self.dynamicAnimator = UIDynamicAnimator(collectionViewLayout: self)
         self.dynamicAnimator.delegate = self
         self.collisionBehavior = UICollisionBehavior()
+        self.gravityBehaviour = UIGravityBehavior()
+        self.gravityBehaviour.gravityDirection = CGVectorMake(0, 1)
         self.dynamicAnimator.addBehavior(self.collisionBehavior)
     }
 
@@ -72,6 +75,7 @@ class MSTumblrMenuFlowLayout: UICollectionViewLayout {
                 snapBehaviour.damping = 0.7
                 self.dynamicAnimator.addBehavior(snapBehaviour)
                 self.collisionBehavior.addItem(attrs)
+                self.gravityBehaviour.addItem(attrs)
             }
         }
     }
