@@ -8,7 +8,7 @@
 
 import UIKit
 
-class MSTumblrMenuFlowLayout: UICollectionViewLayout {
+class MSTumblrMenuFlowLayout: UICollectionViewFlowLayout {
 
     var dynamicAnimator: UIDynamicAnimator!
     var collisionBehavior: UICollisionBehavior!
@@ -22,13 +22,18 @@ class MSTumblrMenuFlowLayout: UICollectionViewLayout {
         self.dynamicAnimator.delegate = self
         self.collisionBehavior = UICollisionBehavior()
         self.gravityBehaviour = UIGravityBehavior()
-        self.gravityBehaviour.gravityDirection = CGVectorMake(0, 1)
+        self.gravityBehaviour.gravityDirection = CGVectorMake(0, -1)
         self.dynamicAnimator.addBehavior(self.collisionBehavior)
     }
 
     required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         self.dynamicAnimator = UIDynamicAnimator(collectionViewLayout: self)
+    }
+
+    override func prepareLayout() {
+        UIView.setAnimationsEnabled(false)
+        super.prepareLayout()
     }
 
     override func layoutAttributesForElementsInRect(rect: CGRect) -> [AnyObject]? {
@@ -41,7 +46,7 @@ class MSTumblrMenuFlowLayout: UICollectionViewLayout {
         }
         var attrs = UICollectionViewLayoutAttributes(forCellWithIndexPath: indexPath)
         attrs.size = self.cellSize
-        attrs.center = CGPointMake(CGFloat(indexPath.row) * (cellSize.width + cellSpace) + cellSize.width / 2, CGFloat(indexPath.section) * (cellSize.height + cellSpace) + cellSize.height / 2)
+        attrs.center = CGPointMake(20 + CGFloat(indexPath.row) * (cellSize.width + cellSpace) + cellSize.width / 2, 100 + CGFloat(indexPath.section) * (cellSize.height + cellSpace) + cellSize.height / 2)
         return attrs
 //        return super.layoutAttributesForItemAtIndexPath(indexPath)
     }
@@ -55,27 +60,27 @@ class MSTumblrMenuFlowLayout: UICollectionViewLayout {
     }
 
     override func initialLayoutAttributesForAppearingItemAtIndexPath(itemIndexPath: NSIndexPath) -> UICollectionViewLayoutAttributes? {
+//        var attrs = self.dynamicAnimator.layoutAttributesForCellAtIndexPath(itemIndexPath);
         var attrs = UICollectionViewLayoutAttributes(forCellWithIndexPath: itemIndexPath)
         attrs.size = self.cellSize
-        attrs.center = CGPointMake(CGFloat(itemIndexPath.row) * (cellSize.width + cellSpace) + cellSize.width / 2, self.collectionViewContentSize().height + CGFloat(itemIndexPath.section) * (cellSize.height + cellSpace) + cellSize.height / 2)
+        attrs.center = CGPointMake(CGFloat(itemIndexPath.row) * (cellSize.width + cellSpace) + cellSize.width / 2, self.collectionViewContentSize().height / 2 + CGFloat(itemIndexPath.section) * (cellSize.height + cellSpace) + cellSize.height / 2)
         return attrs
     }
 
     override func prepareForCollectionViewUpdates(updateItems: [AnyObject]!) {
-        super.prepareForCollectionViewUpdates(updateItems)
+//        super.prepareForCollectionViewUpdates(updateItems)
         for updateItem in updateItems {
             let updateAction = updateItem.updateAction!
             if updateAction == .Insert {
                 let indexPath: NSIndexPath = (updateItem as! UICollectionViewUpdateItem).indexPathAfterUpdate!
-                var attrs = UICollectionViewLayoutAttributes(forCellWithIndexPath: indexPath)
-                attrs.size = self.cellSize
-                let center = CGPointMake(CGFloat(indexPath.row) * (cellSize.width + cellSpace) + cellSize.width / 2, CGFloat(indexPath.section) * (cellSize.height + cellSpace) + cellSize.height / 2)
-                attrs.center = center
+                var attrs = self.initialLayoutAttributesForAppearingItemAtIndexPath(indexPath)!
+                let center = CGPointMake(20 + CGFloat(indexPath.row) * (cellSize.width + cellSpace) + cellSize.width / 2, 100 + CGFloat(indexPath.section) * (cellSize.height + cellSpace) + cellSize.height / 2)
                 var snapBehaviour = UISnapBehavior(item: attrs, snapToPoint: center)
-                snapBehaviour.damping = 0.7
-                self.dynamicAnimator.addBehavior(snapBehaviour)
+                snapBehaviour.damping = 1.0
+
                 self.collisionBehavior.addItem(attrs)
                 self.gravityBehaviour.addItem(attrs)
+                self.dynamicAnimator.addBehavior(snapBehaviour)
             }
         }
     }
