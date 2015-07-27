@@ -33,6 +33,7 @@ class MSTumblrMenuAnimationController: NSObject, UIViewControllerAnimatedTransit
 
     private func presentViewController(menuViewController: MSTumblrMenuViewController) {
         menuViewController.view.alpha = 0.5
+        menuViewController.addItems()
         
 //        menuViewController.addItems()
 

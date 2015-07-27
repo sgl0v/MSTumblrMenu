@@ -11,8 +11,6 @@ import UIKit
 class MSTumblrMenuFlowLayout: UICollectionViewFlowLayout {
 
     var dynamicAnimator: UIDynamicAnimator!
-    var collisionBehavior: UICollisionBehavior!
-    var gravityBehaviour: UIGravityBehavior!
     let cellSize = CGSizeMake(100, 100)
     let cellSpace: CGFloat = 20.0
 
@@ -20,10 +18,6 @@ class MSTumblrMenuFlowLayout: UICollectionViewFlowLayout {
         super.init()
         self.dynamicAnimator = UIDynamicAnimator(collectionViewLayout: self)
         self.dynamicAnimator.delegate = self
-        self.collisionBehavior = UICollisionBehavior()
-        self.gravityBehaviour = UIGravityBehavior()
-        self.gravityBehaviour.gravityDirection = CGVectorMake(0, -1)
-        self.dynamicAnimator.addBehavior(self.collisionBehavior)
     }
 
     required init(coder aDecoder: NSCoder) {
@@ -61,28 +55,43 @@ class MSTumblrMenuFlowLayout: UICollectionViewFlowLayout {
 
     override func initialLayoutAttributesForAppearingItemAtIndexPath(itemIndexPath: NSIndexPath) -> UICollectionViewLayoutAttributes? {
 //        var attrs = self.dynamicAnimator.layoutAttributesForCellAtIndexPath(itemIndexPath);
+        let offset = self.collectionViewContentSize().height + (itemIndexPath.row == 1 ? 0.0 : 100.0)
         var attrs = UICollectionViewLayoutAttributes(forCellWithIndexPath: itemIndexPath)
         attrs.size = self.cellSize
-        attrs.center = CGPointMake(CGFloat(itemIndexPath.row) * (cellSize.width + cellSpace) + cellSize.width / 2, self.collectionViewContentSize().height / 2 + CGFloat(itemIndexPath.section) * (cellSize.height + cellSpace) + cellSize.height / 2)
+        attrs.center = CGPointMake(CGFloat(itemIndexPath.row) * (cellSize.width + cellSpace) + cellSize.width / 2,  offset + CGFloat(itemIndexPath.section) * (cellSize.height + cellSpace) + cellSize.height / 2)
         return attrs
     }
 
     override func prepareForCollectionViewUpdates(updateItems: [AnyObject]!) {
 //        super.prepareForCollectionViewUpdates(updateItems)
+        var gravityBehaviour = UIGravityBehavior()
+        gravityBehaviour.gravityDirection = CGVectorMake(0, -5)
         for updateItem in updateItems {
             let updateAction = updateItem.updateAction!
             if updateAction == .Insert {
                 let indexPath: NSIndexPath = (updateItem as! UICollectionViewUpdateItem).indexPathAfterUpdate!
+
+                var collisionBehaviour = UICollisionBehavior()
+//                collisionBehaviour.translatesReferenceBoundsIntoBoundary = true
+                collisionBehaviour.addBoundaryWithIdentifier("id", fromPoint: CGPointMake(0, 100 + CGFloat(indexPath.section) * (cellSize.height + cellSpace) + cellSize.height / 2), toPoint: CGPointMake(self.collectionViewContentSize().width, 100 + CGFloat(indexPath.section) * (cellSize.height + cellSpace) + cellSize.height / 2))
+
                 var attrs = self.initialLayoutAttributesForAppearingItemAtIndexPath(indexPath)!
                 let center = CGPointMake(20 + CGFloat(indexPath.row) * (cellSize.width + cellSpace) + cellSize.width / 2, 100 + CGFloat(indexPath.section) * (cellSize.height + cellSpace) + cellSize.height / 2)
-                var snapBehaviour = UISnapBehavior(item: attrs, snapToPoint: center)
-                snapBehaviour.damping = 1.0
+//                var itemPropertiesBehaviour = UIDynamicItemBehavior(items: [attrs])
+//                itemPropertiesBehaviour.allowsRotation = false
+//                itemPropertiesBehaviour.elasticity = 0.25
+//                self.dynamicAnimator.addBehavior(itemPropertiesBehaviour)
 
-                self.collisionBehavior.addItem(attrs)
-                self.gravityBehaviour.addItem(attrs)
-                self.dynamicAnimator.addBehavior(snapBehaviour)
+//                var snapBehaviour = UISnapBehavior(item: attrs, snapToPoint: center)
+//                snapBehaviour.damping = 0.15
+//                self.dynamicAnimator.addBehavior(snapBehaviour)
+                gravityBehaviour.addItem(attrs)
+                collisionBehaviour.addItem(attrs)
+
+                self.dynamicAnimator.addBehavior(collisionBehaviour)
             }
         }
+        self.dynamicAnimator.addBehavior(gravityBehaviour)
     }
 
 

@@ -26,8 +26,8 @@ class MSTumblrMenuViewController: UICollectionViewController {
     }
 
     func dismissViewController(sender: AnyObject) {
-        addItems()
-//        self.dismissViewControllerAnimated(true, completion: nil)
+//        addItems()
+        self.dismissViewControllerAnimated(true, completion: nil)
     }
 
     func addItems() {
