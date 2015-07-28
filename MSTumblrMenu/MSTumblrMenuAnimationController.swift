@@ -8,7 +8,7 @@
 
 import UIKit
 
-class MSTumblrMenuAnimationController: NSObject, UIViewControllerAnimatedTransitioning {
+class MSTumblrMenuAnimationController: NSObject {
 
     private let presenting: Bool
     private var minOffset: CGFloat {
@@ -54,7 +54,7 @@ class MSTumblrMenuAnimationController: NSObject, UIViewControllerAnimatedTransit
 
 extension MSTumblrMenuAnimationController: UIViewControllerAnimatedTransitioning {
 
-    func transitionDuration(transitionContext: UIViewControllerContextTransitioning) -> NSTimeInterval {
+    func transitionDuration(transitionContext: UIViewControllerContextTransitioning?) -> NSTimeInterval {
         return 0.6
     }
 
@@ -65,15 +65,15 @@ extension MSTumblrMenuAnimationController: UIViewControllerAnimatedTransitioning
         let menuViewController = self.presenting ? controllers.to as! MSTumblrMenuViewController : controllers.from as! MSTumblrMenuViewController
         let bottomViewController = self.presenting ? controllers.from : controllers.to
 
-        container.addSubview(bottomViewController.view)
-        container.addSubview(menuViewController.view)
+        container!.addSubview(bottomViewController.view)
+        container!.addSubview(menuViewController.view)
         if self.presenting {
             self.prepareForPresentingViewController(menuViewController)
         }
 
         let duration = self.transitionDuration(transitionContext)
 
-        UIView.animateWithDuration(duration, delay: 0.0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0.8, options: nil, animations: { () -> Void in
+        UIView.animateWithDuration(duration, delay: 0.0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0.8, options: [], animations: { () -> Void in
             if self.presenting {
                 self.presentViewController(menuViewController)
             } else {

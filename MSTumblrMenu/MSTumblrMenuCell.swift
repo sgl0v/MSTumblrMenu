@@ -23,4 +23,11 @@ class MSTumblrMenuCell: UICollectionViewCell {
         self.backgroundColor = UIColor.greenColor()
     }
 
+    override func applyLayoutAttributes(layoutAttributes: UICollectionViewLayoutAttributes) {
+        super.applyLayoutAttributes(layoutAttributes)
+        if let menuCellLayoutAttributes = layoutAttributes as? MSTumblrMenuLayoutAttributes, animation = menuCellLayoutAttributes.animation {
+            self.layer.addAnimation(animation, forKey: "position")
+        }
+    }
+
 }

@@ -17,7 +17,7 @@ class MSTumblrMenuViewController: UICollectionViewController {
     override func viewDidLoad() {
         self.collectionView?.registerClass(MSTumblrMenuCell.self, forCellWithReuseIdentifier: MSTumblrMenuViewController.kMenuCellIdentifier)
 
-        var gestureRecognizer = UITapGestureRecognizer(target: self, action: "dismissViewController:")
+        let gestureRecognizer = UITapGestureRecognizer(target: self, action: "dismissViewController:")
         self.collectionView?.addGestureRecognizer(gestureRecognizer)
 //        let blurEffect = UIBlurEffect(style: .Light)
 //        let blurView = UIVisualEffectView(effect: blurEffect)
