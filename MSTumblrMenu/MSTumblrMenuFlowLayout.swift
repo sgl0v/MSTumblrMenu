@@ -10,43 +10,42 @@ import UIKit
 
 class MSTumblrMenuFlowLayout: UICollectionViewLayout {
 
-    var dynamicAnimator: UIDynamicAnimator!
     let cellSize = CGSizeMake(100, 100)
-    let cellSpace: CGFloat = 20.0
-
-    required override init() {
-        super.init()
-        self.dynamicAnimator = UIDynamicAnimator(collectionViewLayout: self)
-        self.dynamicAnimator.delegate = self
-    }
-
-    required init(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        self.dynamicAnimator = UIDynamicAnimator(collectionViewLayout: self)
-    }
+    let cellSpace: CGFloat = 30.0
+    var indexPathsToAnimate : Array<NSIndexPath>!
+    var cachedAttributes = [NSIndexPath: MSTumblrMenuLayoutAttributes]()
 
     override func prepareLayout() {
         UIView.setAnimationsEnabled(false)
         super.prepareLayout()
+        cachedAttributes.removeAll(keepCapacity: false)
+        for section in 0..<self.collectionView!.numberOfSections() {
+            for item in 0..<self.collectionView!.numberOfItemsInSection(section) {
+                let indexPath = NSIndexPath(forItem: item, inSection: section)
+                let attributes = MSTumblrMenuLayoutAttributes(forCellWithIndexPath: indexPath)
+                attributes.size = self.cellSize
+                attributes.center = CGPointMake(CGFloat(indexPath.row) * (cellSize.width + cellSpace) + cellSize.width / 2, 100 + CGFloat(indexPath.section) * (cellSize.height + cellSpace) + cellSize.height / 2)
+                cachedAttributes[indexPath] = attributes
+            }
+        }
     }
 
     override class func layoutAttributesClass() -> AnyClass {
         return MSTumblrMenuLayoutAttributes.self
     }
 
-    override func layoutAttributesForElementsInRect(rect: CGRect) -> [AnyObject]? {
-        return self.dynamicAnimator.itemsInRect(rect)
+    override func layoutAttributesForElementsInRect(rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
+        var result = [UICollectionViewLayoutAttributes]()
+        for (_, attributes) in cachedAttributes {
+            if CGRectIntersectsRect(attributes.frame, rect) {
+                result.append(attributes)
+            }
+        }
+        return result
     }
 
-    override func layoutAttributesForItemAtIndexPath(indexPath: NSIndexPath) -> UICollectionViewLayoutAttributes! {
-        if let attrs = self.dynamicAnimator.layoutAttributesForCellAtIndexPath(indexPath) {
-            return attrs
-        }
-        var attrs = UICollectionViewLayoutAttributes(forCellWithIndexPath: indexPath)
-        attrs.size = self.cellSize
-        attrs.center = CGPointMake(20 + CGFloat(indexPath.row) * (cellSize.width + cellSpace) + cellSize.width / 2, 100 + CGFloat(indexPath.section) * (cellSize.height + cellSpace) + cellSize.height / 2)
-        return attrs
-//        return super.layoutAttributesForItemAtIndexPath(indexPath)
+    override func layoutAttributesForItemAtIndexPath(indexPath: NSIndexPath) -> UICollectionViewLayoutAttributes? {
+        return self.cachedAttributes[indexPath]
     }
 
     override func collectionViewContentSize() -> CGSize {
@@ -58,43 +57,43 @@ class MSTumblrMenuFlowLayout: UICollectionViewLayout {
     }
 
     override func initialLayoutAttributesForAppearingItemAtIndexPath(itemIndexPath: NSIndexPath) -> UICollectionViewLayoutAttributes? {
-//        var attrs = self.dynamicAnimator.layoutAttributesForCellAtIndexPath(itemIndexPath);
-        let offset = self.collectionViewContentSize().height + (itemIndexPath.row == 1 ? 0.0 : 100.0)
-        var attrs = UICollectionViewLayoutAttributes(forCellWithIndexPath: itemIndexPath)
-        attrs.size = self.cellSize
-        attrs.center = CGPointMake(CGFloat(itemIndexPath.row) * (cellSize.width + cellSpace) + cellSize.width / 2,  offset + CGFloat(itemIndexPath.section) * (cellSize.height + cellSpace) + cellSize.height / 2)
-        return attrs
+        if self.indexPathsToAnimate.indexOf(itemIndexPath) == nil {
+            return super.initialLayoutAttributesForAppearingItemAtIndexPath(itemIndexPath)
+        }
+        let offset = self.collectionViewContentSize().height * CGFloat(itemIndexPath.section + 1)
+        let transformAnimation = CABasicAnimation(keyPath: "position.y")
+        transformAnimation.duration = 3
+//        transformAnimation.damping = 14
+//        transformAnimation.initialVelocity = 5
+//        transformAnimation.stiffness = 1.0
+        transformAnimation.fromValue = offset + CGFloat(itemIndexPath.section) * (cellSize.height + cellSpace)
+        transformAnimation.byValue = -offset + 100
+        transformAnimation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseIn)
+        transformAnimation.removedOnCompletion = false
+        transformAnimation.fillMode = kCAFillModeForwards
+//        transformAnimation.beginTime = CACurrentMediaTime() + transformAnimation.duration * CFTimeInterval(itemIndexPath.section)
+
+        let attributes = MSTumblrMenuLayoutAttributes(forCellWithIndexPath: itemIndexPath)
+        attributes.animation = transformAnimation
+        attributes.size = self.cellSize
+        attributes.center = CGPointMake(CGFloat(itemIndexPath.row) * (cellSize.width + cellSpace),  offset + CGFloat(itemIndexPath.section) * (cellSize.height + cellSpace))
+        return attributes
     }
 
-    override func prepareForCollectionViewUpdates(updateItems: [AnyObject]!) {
-//        super.prepareForCollectionViewUpdates(updateItems)
-        var gravityBehaviour = UIGravityBehavior()
-        gravityBehaviour.gravityDirection = CGVectorMake(0, -5)
+    override func prepareForCollectionViewUpdates(updateItems: [UICollectionViewUpdateItem]) {
+        super.prepareForCollectionViewUpdates(updateItems)
+        self.indexPathsToAnimate = [NSIndexPath]()
         for updateItem in updateItems {
-            let updateAction = updateItem.updateAction!
+            let updateAction = updateItem.updateAction
             if updateAction == .Insert {
-                let indexPath: NSIndexPath = (updateItem as! UICollectionViewUpdateItem).indexPathAfterUpdate!
-
-                var collisionBehaviour = UICollisionBehavior()
-                collisionBehaviour.addBoundaryWithIdentifier("id", fromPoint: CGPointMake(0, 100 + CGFloat(indexPath.section) * (cellSize.height + cellSpace) + cellSize.height / 2), toPoint: CGPointMake(self.collectionViewContentSize().width, 100 + CGFloat(indexPath.section) * (cellSize.height + cellSpace) + cellSize.height / 2))
-
-                var attrs = self.initialLayoutAttributesForAppearingItemAtIndexPath(indexPath)!
-                let center = CGPointMake(20 + CGFloat(indexPath.row) * (cellSize.width + cellSpace) + cellSize.width / 2, 100 + CGFloat(indexPath.section) * (cellSize.height + cellSpace) + cellSize.height / 2)
-//                var itemPropertiesBehaviour = UIDynamicItemBehavior(items: [attrs])
-//                itemPropertiesBehaviour.allowsRotation = false
-//                itemPropertiesBehaviour.elasticity = 0.25
-//                self.dynamicAnimator.addBehavior(itemPropertiesBehaviour)
-
-                var snapBehaviour = MSSnapBehavior(view: self.collectionView!, item: attrs, snapToPoint: center)
-//                snapBehaviour.damping = 0.15
-                self.dynamicAnimator.addBehavior(snapBehaviour)
-//                gravityBehaviour.addItem(attrs)
-//                collisionBehaviour.addItem(attrs)
-
-                self.dynamicAnimator.addBehavior(collisionBehaviour)
+                let indexPath = (updateItem as UICollectionViewUpdateItem).indexPathAfterUpdate
+                self.indexPathsToAnimate.append(indexPath)
             }
         }
-        self.dynamicAnimator.addBehavior(gravityBehaviour)
+    }
+
+    override func finalizeCollectionViewUpdates() {
+        self.indexPathsToAnimate = nil
     }
 
 
@@ -137,11 +136,4 @@ class MSTumblrMenuFlowLayout: UICollectionViewLayout {
 //    }
 
     // MARK: Private
-}
-
-extension MSTumblrMenuFlowLayout: UIDynamicAnimatorDelegate {
-
-    func dynamicAnimatorDidPause(animator: UIDynamicAnimator) {
-        // send the callback
-    }
 }
