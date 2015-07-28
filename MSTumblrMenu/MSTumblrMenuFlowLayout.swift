@@ -8,7 +8,7 @@
 
 import UIKit
 
-class MSTumblrMenuFlowLayout: UICollectionViewFlowLayout {
+class MSTumblrMenuFlowLayout: UICollectionViewLayout {
 
     var dynamicAnimator: UIDynamicAnimator!
     let cellSize = CGSizeMake(100, 100)
@@ -28,6 +28,10 @@ class MSTumblrMenuFlowLayout: UICollectionViewFlowLayout {
     override func prepareLayout() {
         UIView.setAnimationsEnabled(false)
         super.prepareLayout()
+    }
+
+    override class func layoutAttributesClass() -> AnyClass {
+        return MSTumblrMenuLayoutAttributes.self
     }
 
     override func layoutAttributesForElementsInRect(rect: CGRect) -> [AnyObject]? {
@@ -72,7 +76,6 @@ class MSTumblrMenuFlowLayout: UICollectionViewFlowLayout {
                 let indexPath: NSIndexPath = (updateItem as! UICollectionViewUpdateItem).indexPathAfterUpdate!
 
                 var collisionBehaviour = UICollisionBehavior()
-//                collisionBehaviour.translatesReferenceBoundsIntoBoundary = true
                 collisionBehaviour.addBoundaryWithIdentifier("id", fromPoint: CGPointMake(0, 100 + CGFloat(indexPath.section) * (cellSize.height + cellSpace) + cellSize.height / 2), toPoint: CGPointMake(self.collectionViewContentSize().width, 100 + CGFloat(indexPath.section) * (cellSize.height + cellSpace) + cellSize.height / 2))
 
                 var attrs = self.initialLayoutAttributesForAppearingItemAtIndexPath(indexPath)!
@@ -82,11 +85,11 @@ class MSTumblrMenuFlowLayout: UICollectionViewFlowLayout {
 //                itemPropertiesBehaviour.elasticity = 0.25
 //                self.dynamicAnimator.addBehavior(itemPropertiesBehaviour)
 
-//                var snapBehaviour = UISnapBehavior(item: attrs, snapToPoint: center)
+                var snapBehaviour = MSSnapBehavior(view: self.collectionView!, item: attrs, snapToPoint: center)
 //                snapBehaviour.damping = 0.15
-//                self.dynamicAnimator.addBehavior(snapBehaviour)
-                gravityBehaviour.addItem(attrs)
-                collisionBehaviour.addItem(attrs)
+                self.dynamicAnimator.addBehavior(snapBehaviour)
+//                gravityBehaviour.addItem(attrs)
+//                collisionBehaviour.addItem(attrs)
 
                 self.dynamicAnimator.addBehavior(collisionBehaviour)
             }
