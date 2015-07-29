@@ -32,7 +32,7 @@ class MSTumblrMenuViewController: UICollectionViewController {
 
     func addItems() {
         var items = [NSIndexPath]()
-        for section in 0..<2 {
+        for section in 0..<numberOfSections {
             for item in 0..<3 {
                 items.append(NSIndexPath(forRow: item, inSection: section))
             }
