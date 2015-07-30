@@ -16,7 +16,6 @@ class MSTumblrMenuFlowLayout: UICollectionViewLayout {
     var cachedAttributes = [NSIndexPath: MSTumblrMenuLayoutAttributes]()
 
     override func prepareLayout() {
-        UIView.setAnimationsEnabled(false)
         super.prepareLayout()
         cachedAttributes.removeAll(keepCapacity: false)
         for section in 0..<self.collectionView!.numberOfSections() {
@@ -24,7 +23,7 @@ class MSTumblrMenuFlowLayout: UICollectionViewLayout {
                 let indexPath = NSIndexPath(forItem: item, inSection: section)
                 let attributes = MSTumblrMenuLayoutAttributes(forCellWithIndexPath: indexPath)
                 attributes.size = self.cellSize
-                attributes.center = CGPointMake(CGFloat(indexPath.row) * (cellSize.width + cellSpace) + cellSize.width / 2, 300 + CGFloat(indexPath.section) * (cellSize.height + cellSpace) + cellSize.height / 2)
+                attributes.center = CGPointMake(CGFloat(indexPath.row) * (cellSize.width + cellSpace) + cellSize.width / 2, 200 + CGFloat(indexPath.section) * (cellSize.height + cellSpace) + cellSize.height / 2)
                 cachedAttributes[indexPath] = attributes
             }
         }
@@ -75,7 +74,7 @@ class MSTumblrMenuFlowLayout: UICollectionViewLayout {
 
 
         let transformAnimation = CABasicAnimation(keyPath: "position.y")
-        transformAnimation.duration = 1
+        transformAnimation.duration = 0.3
         transformAnimation.fromValue = offset + CGFloat(itemIndexPath.section) * (cellSize.height + cellSpace)
         transformAnimation.toValue = 200 + CGFloat(itemIndexPath.section) * (cellSize.height + cellSpace)
         transformAnimation.timingFunction = CAMediaTimingFunction(controlPoints: 0.45, 1.2, 0.75, 1.0)

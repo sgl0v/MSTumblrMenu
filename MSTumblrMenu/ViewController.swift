@@ -23,18 +23,18 @@ class ViewController: UIViewController {
     }
 
     @IBAction func showMenu(sender: UIButton) {
-        let controller = MSTumblrMenuViewController(collectionViewLayout: MSTumblrMenuFlowLayout())
-        controller.transitioningDelegate = self.menuTransitioningDelegate
-        self.presentViewController(controller, animated: true, completion: nil)
+        let toViewController = MSTumblrMenuViewController(collectionViewLayout: MSTumblrMenuFlowLayout())
+        self.presentViewController(toViewController, animated: true, completion: nil)
     }
 
     @IBAction func unwindToViewController(sender: UIStoryboardSegue) {
-        
+        self.dismissViewControllerAnimated(true, completion: nil)
     }
 
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         let toViewController = segue.destinationViewController as UIViewController
         toViewController.transitioningDelegate = self.menuTransitioningDelegate
+        toViewController.modalPresentationStyle = .Custom
     }
 }
 

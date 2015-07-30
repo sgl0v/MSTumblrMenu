@@ -10,23 +10,34 @@ import UIKit
 
 class MSTumblrMenuViewController: UICollectionViewController {
 
+    let menuTransitioningDelegate = MSTumblrMenuTransitioningDelegate()
     static let kMenuCellIdentifier = "MenuCellIdentifier"
     var numberOfSections = 2
     var numberOfItems = 0
+
+    override init(collectionViewLayout layout: UICollectionViewLayout) {
+        super.init(collectionViewLayout: layout)
+        commonInit()
+    }
+
+    required init(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        commonInit()
+    }
+
+    private func commonInit() {
+        self.modalPresentationStyle = .Custom
+        self.transitioningDelegate = self.menuTransitioningDelegate
+    }
 
     override func viewDidLoad() {
         self.collectionView?.registerClass(MSTumblrMenuCell.self, forCellWithReuseIdentifier: MSTumblrMenuViewController.kMenuCellIdentifier)
 
         let gestureRecognizer = UITapGestureRecognizer(target: self, action: "dismissViewController:")
         self.collectionView?.addGestureRecognizer(gestureRecognizer)
-//        let blurEffect = UIBlurEffect(style: .Light)
-//        let blurView = UIVisualEffectView(effect: blurEffect)
-//        blurView.setTranslatesAutoresizingMaskIntoConstraints(false)
-//        self.view.insertSubview(blurView, atIndex: 0)
     }
 
     func dismissViewController(sender: AnyObject) {
-//        addItems()
         self.dismissViewControllerAnimated(true, completion: nil)
     }
 
@@ -42,7 +53,9 @@ class MSTumblrMenuViewController: UICollectionViewController {
             self.collectionView?.insertItemsAtIndexPaths(items)
 //            self.numberOfSections = 1
             self.numberOfItems = 3
-        }, completion: nil)
+            }, completion: {finished in
+//                collectionView?.reloadData()
+        })
     }
 
 //    override func viewDidLayoutSubviews() {
