@@ -85,7 +85,42 @@ class MSTumblrMenuFlowLayout: UICollectionViewLayout {
         let attributes = MSTumblrMenuLayoutAttributes(forCellWithIndexPath: itemIndexPath)
         attributes.animation = transformAnimation
         attributes.size = self.cellSize
-        attributes.center = CGPointMake(CGFloat(itemIndexPath.row) * (cellSize.width + cellSpace),  offset + CGFloat(itemIndexPath.section) * (cellSize.height + cellSpace))
+        attributes.center = CGPointMake(CGFloat(itemIndexPath.row) * (cellSize.width + cellSpace) + cellSize.width / 2,  offset + CGFloat(itemIndexPath.section) * (cellSize.height + cellSpace) + cellSize.height / 2)
+        return attributes
+    }
+
+
+    override func finalLayoutAttributesForDisappearingItemAtIndexPath(itemIndexPath: NSIndexPath) -> UICollectionViewLayoutAttributes? {
+        if self.indexPathsToAnimate.indexOf(itemIndexPath) == nil {
+            return super.finalLayoutAttributesForDisappearingItemAtIndexPath(itemIndexPath)
+        }
+        var offset = self.collectionViewContentSize().height + 300 * CGFloat(self.collectionView!.numberOfSections() - 1 - itemIndexPath.section) * CGFloat((self.collectionView!.numberOfItemsInSection(itemIndexPath.section)))
+        if itemIndexPath.row == 0 {
+            offset -= 300
+        } else if itemIndexPath.row == 2 {
+            offset -= 600
+        }
+        var delay = 0.1 * Double(itemIndexPath.section) * Double((self.collectionView!.numberOfItemsInSection(itemIndexPath.section)))
+        if itemIndexPath.row == 0 {
+            delay += 0.1
+        } else if itemIndexPath.row == 2 {
+            delay += 0.1 * 2
+        }
+
+
+        let transformAnimation = CABasicAnimation(keyPath: "position.y")
+        transformAnimation.duration = 0.3
+        transformAnimation.fromValue = offset + CGFloat(itemIndexPath.section) * (cellSize.height + cellSpace)
+        transformAnimation.toValue = 200 + CGFloat(itemIndexPath.section) * (cellSize.height + cellSpace)
+        transformAnimation.timingFunction = CAMediaTimingFunction(controlPoints: 0.45, 1.2, 0.75, 1.0)
+        transformAnimation.removedOnCompletion = false
+        transformAnimation.fillMode = kCAFillModeForwards
+        transformAnimation.beginTime = CACurrentMediaTime() + delay
+
+        let attributes = MSTumblrMenuLayoutAttributes(forCellWithIndexPath: itemIndexPath)
+        attributes.animation = transformAnimation
+        attributes.size = self.cellSize
+        attributes.center = CGPointMake(CGFloat(itemIndexPath.row) * (cellSize.width + cellSpace) + cellSize.width / 2,  -offset + CGFloat(itemIndexPath.section) * (cellSize.height + cellSpace) + cellSize.height / 2)
         return attributes
     }
 
@@ -93,10 +128,10 @@ class MSTumblrMenuFlowLayout: UICollectionViewLayout {
         super.prepareForCollectionViewUpdates(updateItems)
         self.indexPathsToAnimate = [NSIndexPath]()
         for updateItem in updateItems {
-            let updateAction = updateItem.updateAction
-            if updateAction == .Insert {
-                let indexPath = (updateItem as UICollectionViewUpdateItem).indexPathAfterUpdate
-                self.indexPathsToAnimate.append(indexPath)
+            if (updateItem.updateAction == .Insert) {
+                self.indexPathsToAnimate.append((updateItem as UICollectionViewUpdateItem).indexPathAfterUpdate)
+            } else if (updateItem.updateAction == .Delete) {
+                self.indexPathsToAnimate.append((updateItem as UICollectionViewUpdateItem).indexPathBeforeUpdate)
             }
         }
     }

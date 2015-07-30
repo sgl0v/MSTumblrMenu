@@ -28,6 +28,7 @@ class MSTumblrMenuViewController: UICollectionViewController {
     private func commonInit() {
         self.modalPresentationStyle = .Custom
         self.transitioningDelegate = self.menuTransitioningDelegate
+        self.collectionView!.viewForBaselineLayout().layer.speed = 0.5
     }
 
     override func viewDidLoad() {
@@ -56,6 +57,19 @@ class MSTumblrMenuViewController: UICollectionViewController {
             }, completion: {finished in
 //                collectionView?.reloadData()
         })
+    }
+
+    func removeItems() {
+        var items = [NSIndexPath]()
+        for section in 0..<numberOfSections {
+            for item in 0..<3 {
+                items.append(NSIndexPath(forRow: item, inSection: section))
+            }
+        }
+        self.collectionView?.performBatchUpdates({
+            self.collectionView?.deleteItemsAtIndexPaths(items)
+            self.numberOfItems = 0
+            }, completion: nil)
     }
 
 //    override func viewDidLayoutSubviews() {
