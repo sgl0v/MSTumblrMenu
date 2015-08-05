@@ -24,6 +24,7 @@ class ViewController: UIViewController {
 
     @IBAction func showMenu(sender: UIButton) {
         let toViewController = MSTumblrMenuViewController(collectionViewLayout: MSTumblrMenuFlowLayout())
+        toViewController.dataSource = self
         self.presentViewController(toViewController, animated: true, completion: nil)
     }
 
@@ -35,6 +36,21 @@ class ViewController: UIViewController {
         let toViewController = segue.destinationViewController as UIViewController
         toViewController.transitioningDelegate = self.menuTransitioningDelegate
         toViewController.modalPresentationStyle = .Custom
+    }
+}
+
+extension ViewController: MSTumblrMenuViewControllerDataSource
+{
+    func tumblrMenuViewController(tumblrMenuViewController: MSTumblrMenuViewController, numberOfRowsInSection section: Int) -> Int {
+        return 3
+    }
+
+    func numberOfSectionsInTumblrMenuViewController(tumblrMenuViewController: MSTumblrMenuViewController) -> Int {
+        return 3
+    }
+
+    func tumblrMenuViewController(tumblrMenuViewController: MSTumblrMenuViewController, itemImageForRowAtIndexPath indexPath: NSIndexPath) -> UIImage? {
+        return nil
     }
 }
 

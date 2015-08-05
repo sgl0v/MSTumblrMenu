@@ -8,12 +8,20 @@
 
 import UIKit
 
+protocol MSTumblrMenuViewControllerDataSource: NSObjectProtocol {
+
+    func tumblrMenuViewController(tumblrMenuViewController: MSTumblrMenuViewController, numberOfRowsInSection section: Int) -> Int
+    func numberOfSectionsInTumblrMenuViewController(tumblrMenuViewController: MSTumblrMenuViewController) -> Int
+    func tumblrMenuViewController(tumblrMenuViewController: MSTumblrMenuViewController, itemImageForRowAtIndexPath indexPath: NSIndexPath) -> UIImage?
+
+}
+
 class MSTumblrMenuViewController: UICollectionViewController {
 
-    let menuTransitioningDelegate = MSTumblrMenuTransitioningDelegate()
     static let kMenuCellIdentifier = "MenuCellIdentifier"
-    var numberOfSections = 2
-    var numberOfItems = 0
+    weak var dataSource: MSTumblrMenuViewControllerDataSource?
+    private let menuTransitioningDelegate = MSTumblrMenuTransitioningDelegate()
+    private var isInserted = false
 
     override init(collectionViewLayout layout: UICollectionViewLayout) {
         super.init(collectionViewLayout: layout)
@@ -43,47 +51,54 @@ class MSTumblrMenuViewController: UICollectionViewController {
     }
 
     func addItems() {
+        guard let numberOfSections = self.dataSource?.numberOfSectionsInTumblrMenuViewController(self) else {
+            return;
+        }
         var items = [NSIndexPath]()
         for section in 0..<numberOfSections {
-            for item in 0..<3 {
+            let numberOfRows = self.dataSource!.tumblrMenuViewController(self, numberOfRowsInSection: section)
+            for item in 0..<numberOfRows {
                 items.append(NSIndexPath(forRow: item, inSection: section))
             }
         }
         self.collectionView?.performBatchUpdates({
 //            self.collectionView?.insertSections(NSIndexSet(indexesInRange: NSMakeRange(0, 1)))
             self.collectionView?.insertItemsAtIndexPaths(items)
-//            self.numberOfSections = 1
-            self.numberOfItems = 3
-            }, completion: {finished in
-//                collectionView?.reloadData()
-        })
+            self.isInserted = true
+            }, completion: nil)
     }
 
     func removeItems() {
+        guard let numberOfSections = self.dataSource?.numberOfSectionsInTumblrMenuViewController(self) else {
+            return;
+        }
         var items = [NSIndexPath]()
         for section in 0..<numberOfSections {
-            for item in 0..<3 {
+            let numberOfRows = self.dataSource!.tumblrMenuViewController(self, numberOfRowsInSection: section)
+            for item in 0..<numberOfRows {
                 items.append(NSIndexPath(forRow: item, inSection: section))
             }
         }
         self.collectionView?.performBatchUpdates({
             self.collectionView?.deleteItemsAtIndexPaths(items)
-            self.numberOfItems = 0
+            self.isInserted = false
             }, completion: nil)
     }
-
-//    override func viewDidLayoutSubviews() {
-//        self.collectionView?.collectionViewLayout.invalidateLayout()
-//    }
 
     // MARK: UICollectionViewControllerDataSource methods
 
     override func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
-        return self.numberOfSections
+//        guard self.isInserted else {
+//            return 0
+//        }
+        return self.dataSource!.numberOfSectionsInTumblrMenuViewController(self)
     }
 
     override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return self.numberOfItems
+        guard self.isInserted else {
+            return 0
+        }
+        return self.dataSource!.tumblrMenuViewController(self, numberOfRowsInSection: section)
     }
 
     override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
@@ -92,35 +107,3 @@ class MSTumblrMenuViewController: UICollectionViewController {
     }
 
 }
-
-//extension MSTumblrMenuViewController: UICollectionViewDelegateFlowLayout
-//{
-//    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-//        return CGSizeMake(100, 100)
-//    }
-//}
-
-//extension MSTumblrMenuViewController: UICollectionViewDelegateFlowLayout {
-//
-//    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-//        let cellSpacing: CGFloat = 20.0
-//        let width: CGFloat = CGRectGetWidth(collectionView.bounds)
-//        let numberOfItems: CGFloat = CGFloat(collectionView.dataSource!.collectionView(self.collectionView!, numberOfItemsInSection: indexPath.section))
-//        let cellWidth = (width - (numberOfItems + 1) * cellSpacing) / numberOfItems
-//        return CGSizeMake(cellWidth, cellWidth)
-//    }
-//
-//    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAtIndex section: Int) -> CGFloat {
-//        return 20.0
-//    }
-//
-////    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAtIndex section: Int) -> CGFloat {
-////        return 20.0
-////    }
-//
-//    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets {
-//        return UIEdgeInsetsMake(20.0, 20.0, 0.0, 20.0)
-//    }
-//
-//
-//}
