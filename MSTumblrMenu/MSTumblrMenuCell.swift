@@ -10,15 +10,38 @@ import UIKit
 
 class MSTumblrMenuCell: UICollectionViewCell {
 
-    private var title: UILabel!
-    private var icon: UIImageView!
+    private lazy var titleLabel: UILabel! = {
+        let titleLabel = UILabel()
+        titleLabel.translatesAutoresizingMaskIntoConstraints = false
+        titleLabel.numberOfLines = 1
+        titleLabel.lineBreakMode = .ByCharWrapping
+        titleLabel.textAlignment = .Center
+        titleLabel.textColor = UIColor.whiteColor()
+        titleLabel.font = UIFont.boldSystemFontOfSize(18.0)
+        return titleLabel
+    }()
+    private lazy var imageView: UIImageView! = {
+        let imageView = UIImageView()
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.contentMode = .ScaleAspectFit
+        return imageView
+    }()
 
     var image: UIImage? {
         get {
-            return self.icon.image
+            return self.imageView.image
         }
         set(newImage) {
-            self.icon.image = newImage
+            self.imageView.image = newImage
+        }
+    }
+
+    var title: String? {
+        get {
+            return self.titleLabel.text
+        }
+        set(newText) {
+            self.titleLabel.text = newText
         }
     }
 
@@ -34,14 +57,18 @@ class MSTumblrMenuCell: UICollectionViewCell {
 
     private func commonInit() {
         self.translatesAutoresizingMaskIntoConstraints = false
-        self.icon = UIImageView()
-        self.icon.translatesAutoresizingMaskIntoConstraints = false
-        self.icon.contentMode = .ScaleAspectFit
-        self.contentView.addSubview(self.icon)
-        let views = ["icon": self.icon]
-        self.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|[icon]|", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: views
+        self.contentView.addSubview(self.imageView)
+        self.contentView.addSubview(self.titleLabel)
+        self.installConstraints()
+    }
+
+    private func installConstraints() {
+        let views = ["image": self.imageView, "title": self.titleLabel]
+        self.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|[image]|", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: views
             ))
-        self.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[icon]|", options: NSLayoutFormatOptions(rawValue:0), metrics: nil, views: views))
+        self.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|[title]|", options: NSLayoutFormatOptions(rawValue:0), metrics: nil, views: views))
+        self.addConstraint(NSLayoutConstraint(item: self.imageView, attribute: .Width, relatedBy: .Equal, toItem: self.imageView, attribute: .Height, multiplier: 1.0, constant: 0.0))
+        self.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[image][title]|", options: NSLayoutFormatOptions(rawValue:0), metrics: nil, views: views))
     }
 
     override func applyLayoutAttributes(layoutAttributes: UICollectionViewLayoutAttributes) {

@@ -11,7 +11,9 @@ import UIKit
 class ViewController: UIViewController {
 
     let menuTransitioningDelegate = MSTumblrMenuTransitioningDelegate()
-    private let images = [["post_type_bubble_chat", "post_type_bubble_link", "post_type_bubble_photo"], ["post_type_bubble_quote", "post_type_bubble_text", "post_type_bubble_video"]]
+    private let images = [["post_type_bubble_text", "post_type_bubble_photo", "post_type_bubble_quote"], ["post_type_bubble_link", "post_type_bubble_chat", "post_type_bubble_video"]]
+    private let titles = [["Text", "Photo", "Quote"], ["Link", "Chat", "Video"]]
+
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -52,6 +54,10 @@ extension ViewController: MSTumblrMenuViewControllerDataSource
 
     func tumblrMenuViewController(tumblrMenuViewController: MSTumblrMenuViewController, itemImageForRowAtIndexPath indexPath: NSIndexPath) -> UIImage? {
         return UIImage(named: self.images[indexPath.section][indexPath.row])
+    }
+
+    func tumblrMenuViewController(tumblrMenuViewController: MSTumblrMenuViewController, itemTitleForRowAtIndexPath indexPath: NSIndexPath) -> String? {
+        return self.titles[indexPath.section][indexPath.row]
     }
 }
 

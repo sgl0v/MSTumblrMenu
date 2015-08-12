@@ -10,7 +10,7 @@ import UIKit
 
 class MSTumblrMenuFlowLayout: UICollectionViewLayout {
 
-    var cellSize = CGSizeMake(100, 100)
+    var cellSize = CGSizeMake(100, 120)
     let cellSpace: CGFloat = 20.0
     var indexPathsToAnimate : Array<NSIndexPath>!
     var cachedAttributes = [NSIndexPath: MSTumblrMenuLayoutAttributes]()
