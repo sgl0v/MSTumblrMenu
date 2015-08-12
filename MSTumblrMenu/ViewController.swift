@@ -11,6 +11,7 @@ import UIKit
 class ViewController: UIViewController {
 
     let menuTransitioningDelegate = MSTumblrMenuTransitioningDelegate()
+    private let images = [["post_type_bubble_chat", "post_type_bubble_link", "post_type_bubble_photo"], ["post_type_bubble_quote", "post_type_bubble_text", "post_type_bubble_video"]]
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,15 +43,15 @@ class ViewController: UIViewController {
 extension ViewController: MSTumblrMenuViewControllerDataSource
 {
     func tumblrMenuViewController(tumblrMenuViewController: MSTumblrMenuViewController, numberOfRowsInSection section: Int) -> Int {
-        return 3
+        return images[section].count
     }
 
     func numberOfSectionsInTumblrMenuViewController(tumblrMenuViewController: MSTumblrMenuViewController) -> Int {
-        return 3
+        return images.count
     }
 
     func tumblrMenuViewController(tumblrMenuViewController: MSTumblrMenuViewController, itemImageForRowAtIndexPath indexPath: NSIndexPath) -> UIImage? {
-        return nil
+        return UIImage(named: self.images[indexPath.section][indexPath.row])
     }
 }
 
