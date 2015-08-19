@@ -14,7 +14,6 @@ class ViewController: UIViewController {
     private let images = [["post_type_bubble_text", "post_type_bubble_photo", "post_type_bubble_quote"], ["post_type_bubble_link", "post_type_bubble_chat", "post_type_bubble_video"]]
     private let titles = [["Text", "Photo", "Quote"], ["Link", "Chat", "Video"]]
 
-
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
@@ -26,8 +25,9 @@ class ViewController: UIViewController {
     }
 
     @IBAction func showMenu(sender: UIButton) {
-        let toViewController = MSTumblrMenuViewController(collectionViewLayout: MSTumblrMenuFlowLayout())
+        let toViewController = MSTumblrMenuViewController(collectionViewLayout: MSTumblrMenuLayout())
         toViewController.dataSource = self
+        toViewController.delegate = self
         self.presentViewController(toViewController, animated: true, completion: nil)
     }
 
@@ -45,11 +45,11 @@ class ViewController: UIViewController {
 extension ViewController: MSTumblrMenuViewControllerDataSource
 {
     func tumblrMenuViewController(tumblrMenuViewController: MSTumblrMenuViewController, numberOfRowsInSection section: Int) -> Int {
-        return images[section].count
+        return self.images[section].count
     }
 
     func numberOfSectionsInTumblrMenuViewController(tumblrMenuViewController: MSTumblrMenuViewController) -> Int {
-        return images.count
+        return self.images.count
     }
 
     func tumblrMenuViewController(tumblrMenuViewController: MSTumblrMenuViewController, itemImageForRowAtIndexPath indexPath: NSIndexPath) -> UIImage? {
@@ -61,3 +61,10 @@ extension ViewController: MSTumblrMenuViewControllerDataSource
     }
 }
 
+
+extension ViewController: MSTumblrMenuViewControllerDelegate
+{
+    func tumblrMenuViewController(tumblrMenuViewController: MSTumblrMenuViewController, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        self.dismissViewControllerAnimated(true, completion: nil)
+    }
+}

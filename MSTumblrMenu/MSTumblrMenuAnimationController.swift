@@ -38,7 +38,7 @@ extension MSTumblrMenuAnimationController: UIViewControllerAnimatedTransitioning
         }
 
         UIView.animateWithDuration(self.transitionDuration(transitionContext), delay: 0.0, usingSpringWithDamping: 1.0, initialSpringVelocity: 0.0, options: .AllowUserInteraction, animations: {
-            presentedControllerView.alpha = self.presenting ? 0.5 : 0
+            presentedControllerView.alpha = self.presenting ? 0.7 : 0
             }, completion: {(completed: Bool) -> Void in
                 transitionContext.completeTransition(completed)
         })
