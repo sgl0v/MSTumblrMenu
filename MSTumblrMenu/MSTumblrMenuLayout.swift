@@ -1,5 +1,5 @@
 //
-//  MSTumblrMenuFlowLayout.swift
+//  MSTumblrMenuLayout.swift
 //  MSTumblrMenu
 //
 //  Created by Maksym Shcheglov on 13/07/15.
@@ -8,29 +8,29 @@
 
 import UIKit
 
-class MSTumblrMenuFlowLayout: UICollectionViewLayout {
+class MSTumblrMenuLayout: UICollectionViewLayout {
 
     var cellSize = CGSizeMake(100, 120)
     let cellSpace: CGFloat = 20.0
-    var indexPathsToAnimate : Array<NSIndexPath>!
+    private var indexPathsToAnimate : Array<NSIndexPath>!
     var cachedAttributes = [NSIndexPath: MSTumblrMenuLayoutAttributes]()
 
     override func prepareLayout() {
         super.prepareLayout()
-        cachedAttributes.removeAll(keepCapacity: false)
-        let height = collectionViewContentSize().height
-        let width = collectionViewContentSize().width
+        self.cachedAttributes = [NSIndexPath: MSTumblrMenuLayoutAttributes]()
+        let height = self.collectionViewContentSize().height
+        let width = self.collectionViewContentSize().width
         let numberOfSections = self.collectionView!.numberOfSections()
-        let minY = (height - CGFloat(numberOfSections) * (cellSize.height + cellSpace) + cellSpace) / 2
+        let minY = (height - CGFloat(numberOfSections) * (self.cellSize.height + self.cellSpace) + self.cellSpace) / 2
         for section in 0..<numberOfSections {
             let numberOfItems = self.collectionView!.numberOfItemsInSection(section)
-            let minX = (width - CGFloat(numberOfItems) * (cellSize.width + cellSpace) + cellSpace) / 2
+            let minX = (width - CGFloat(numberOfItems) * (self.cellSize.width + self.cellSpace) + self.cellSpace) / 2
             for item in 0..<numberOfItems {
                 let indexPath = NSIndexPath(forItem: item, inSection: section)
                 let attributes = MSTumblrMenuLayoutAttributes(forCellWithIndexPath: indexPath)
                 attributes.size = self.cellSize
-                attributes.center = CGPointMake(minX + CGFloat(indexPath.row) * (cellSize.width + cellSpace) + cellSize.width / 2, minY + CGFloat(indexPath.section) * (cellSize.height + cellSpace) + cellSize.height / 2)
-                cachedAttributes[indexPath] = attributes
+                attributes.center = CGPointMake(minX + CGFloat(indexPath.row) * (self.cellSize.width + self.cellSpace) + self.cellSize.width / 2, minY + CGFloat(indexPath.section) * (self.cellSize.height + self.cellSpace) + self.self.cellSize.height / 2)
+                self.cachedAttributes[indexPath] = attributes
             }
         }
     }
@@ -41,7 +41,7 @@ class MSTumblrMenuFlowLayout: UICollectionViewLayout {
 
     override func layoutAttributesForElementsInRect(rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
         var result = [UICollectionViewLayoutAttributes]()
-        for (_, attributes) in cachedAttributes {
+        for (_, attributes) in self.cachedAttributes {
             if CGRectIntersectsRect(attributes.frame, rect) {
                 result.append(attributes)
             }

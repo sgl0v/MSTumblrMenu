@@ -16,10 +16,16 @@ protocol MSTumblrMenuViewControllerDataSource: NSObjectProtocol {
     func tumblrMenuViewController(tumblrMenuViewController: MSTumblrMenuViewController, itemTitleForRowAtIndexPath indexPath: NSIndexPath) -> String?
 }
 
+protocol MSTumblrMenuViewControllerDelegate: NSObjectProtocol {
+
+    func tumblrMenuViewController(tumblrMenuViewController: MSTumblrMenuViewController, didSelectRowAtIndexPath indexPath: NSIndexPath)
+}
+
 class MSTumblrMenuViewController: UICollectionViewController {
 
     static let kMenuCellIdentifier = "MenuCellIdentifier"
     weak var dataSource: MSTumblrMenuViewControllerDataSource?
+    weak var delegate: MSTumblrMenuViewControllerDelegate?
     private let menuTransitioningDelegate = MSTumblrMenuTransitioningDelegate()
     private var isInserted = false
 
@@ -41,13 +47,6 @@ class MSTumblrMenuViewController: UICollectionViewController {
 
     override func viewDidLoad() {
         self.collectionView?.registerClass(MSTumblrMenuCell.self, forCellWithReuseIdentifier: MSTumblrMenuViewController.kMenuCellIdentifier)
-
-        let gestureRecognizer = UITapGestureRecognizer(target: self, action: "dismissViewController:")
-        self.collectionView?.addGestureRecognizer(gestureRecognizer)
-    }
-
-    func dismissViewController(sender: AnyObject) {
-        self.dismissViewControllerAnimated(true, completion: nil)
     }
 
     func addItems() {
@@ -61,11 +60,11 @@ class MSTumblrMenuViewController: UICollectionViewController {
                 items.append(NSIndexPath(forRow: item, inSection: section))
             }
         }
-        self.collectionView?.performBatchUpdates({
+//        self.collectionView?.performBatchUpdates({
 //            self.collectionView?.insertSections(NSIndexSet(indexesInRange: NSMakeRange(0, 1)))
-            self.collectionView?.insertItemsAtIndexPaths(items)
             self.isInserted = true
-            }, completion: nil)
+            self.collectionView?.insertItemsAtIndexPaths(items)
+//            }, completion: nil)
     }
 
     func removeItems() {
@@ -79,10 +78,13 @@ class MSTumblrMenuViewController: UICollectionViewController {
                 items.append(NSIndexPath(forRow: item, inSection: section))
             }
         }
-        self.collectionView?.performBatchUpdates({
-            self.collectionView?.deleteItemsAtIndexPaths(items)
+//        self.collectionView?.performBatchUpdates({
             self.isInserted = false
-            }, completion: nil)
+//        let layout = self.collectionViewLayout as! MSTumblrMenuLayout
+//        layout.cachedAttributes = [NSIndexPath: MSTumblrMenuLayoutAttributes]()
+
+            self.collectionView?.deleteItemsAtIndexPaths(items)
+//            }, completion: nil)
     }
 
     // MARK: UICollectionViewControllerDataSource methods
@@ -106,6 +108,12 @@ class MSTumblrMenuViewController: UICollectionViewController {
         menuCell.image = self.dataSource?.tumblrMenuViewController(self, itemImageForRowAtIndexPath: indexPath)
         menuCell.title = self.dataSource?.tumblrMenuViewController(self, itemTitleForRowAtIndexPath: indexPath)
         return menuCell
+    }
+
+    // MARK: UICollectionViewControllerDelegate methods
+
+    override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+        self.delegate?.tumblrMenuViewController(self, didSelectRowAtIndexPath: indexPath)
     }
 
 }

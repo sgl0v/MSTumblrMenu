@@ -72,7 +72,7 @@ class MSTumblrMenuCell: UICollectionViewCell {
     }
 
     override func applyLayoutAttributes(layoutAttributes: UICollectionViewLayoutAttributes) {
-        super.applyLayoutAttributes(layoutAttributes)
+//        super.applyLayoutAttributes(layoutAttributes)
         if let menuCellLayoutAttributes = layoutAttributes as? MSTumblrMenuLayoutAttributes, animation = menuCellLayoutAttributes.animation {
             self.layer.addAnimation(animation, forKey: "position")
         }
