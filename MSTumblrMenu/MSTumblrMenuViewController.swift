@@ -46,7 +46,7 @@ class MSTumblrMenuViewController: UICollectionViewController {
     private func commonInit() {
         self.modalPresentationStyle = .Custom
         self.transitioningDelegate = self.menuTransitioningDelegate
-        self.collectionView!.viewForBaselineLayout().layer.speed = 0.5
+        self.collectionView!.viewForBaselineLayout().layer.speed = 0.5 // slow down the default insert/delete animation duration
     }
 
     override func viewDidLoad() {

@@ -66,7 +66,7 @@ class MSTumblrMenuLayout: UICollectionViewLayout {
         }
         let offset = self.collectionViewContentSize().height
         let attributes = UICollectionViewLayoutAttributes(forCellWithIndexPath: itemIndexPath)
-        attributes.alpha = 1.0
+//        attributes.alpha = 1.0
         attributes.size = self.cellSize
         attributes.center = CGPointMake(self.cachedAttributes[itemIndexPath]!.center.x,  offset + self.cachedAttributes[itemIndexPath]!.center.y)
         return attributes
@@ -78,7 +78,7 @@ class MSTumblrMenuLayout: UICollectionViewLayout {
             return super.finalLayoutAttributesForDisappearingItemAtIndexPath(itemIndexPath)
         }
         let attributes = UICollectionViewLayoutAttributes(forCellWithIndexPath: itemIndexPath)
-        attributes.alpha = 1.0
+//        attributes.alpha = 1.0
         attributes.size = self.cellSize
         attributes.center = CGPointMake(CGFloat(itemIndexPath.row) * (cellSize.width + cellSpace) + cellSize.width / 2,  -cellSize.height / 2)
         return attributes

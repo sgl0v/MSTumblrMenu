@@ -71,11 +71,11 @@ class MSTumblrMenuCell: UICollectionViewCell {
         self.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[image][title]|", options: NSLayoutFormatOptions(rawValue:0), metrics: nil, views: views))
     }
 
-    override func applyLayoutAttributes(layoutAttributes: UICollectionViewLayoutAttributes) {
-//        super.applyLayoutAttributes(layoutAttributes)
-        if let menuCellLayoutAttributes = layoutAttributes as? MSTumblrMenuLayoutAttributes, animation = menuCellLayoutAttributes.animation {
-            self.layer.addAnimation(animation, forKey: "position")
-        }
-    }
+//    override func applyLayoutAttributes(layoutAttributes: UICollectionViewLayoutAttributes) {
+////        super.applyLayoutAttributes(layoutAttributes)
+//        if let menuCellLayoutAttributes = layoutAttributes as? MSTumblrMenuLayoutAttributes, animation = menuCellLayoutAttributes.animation {
+//            self.layer.addAnimation(animation, forKey: "position")
+//        }
+//    }
 
 }
