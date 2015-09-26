@@ -21,7 +21,7 @@ class MSTumblrMenuAnimationController: NSObject {
 extension MSTumblrMenuAnimationController: UIViewControllerAnimatedTransitioning {
 
     func transitionDuration(transitionContext: UIViewControllerContextTransitioning?) -> NSTimeInterval {
-        return 1
+        return 2
     }
 
     func animateTransition(transitionContext: UIViewControllerContextTransitioning)  {
@@ -37,11 +37,9 @@ extension MSTumblrMenuAnimationController: UIViewControllerAnimatedTransitioning
             menuViewController.removeItems()
         }
 
-        UIView.animateWithDuration(self.transitionDuration(transitionContext), delay: 0.0, usingSpringWithDamping: 1.0, initialSpringVelocity: 0.0, options: .AllowUserInteraction, animations: {
+        UIView.animateWithDuration(self.transitionDuration(transitionContext), animations: {
             presentedControllerView.alpha = self.presenting ? 0.7 : 0
-            }, completion: {(completed: Bool) -> Void in
-                transitionContext.completeTransition(completed)
-        })
+            }) {completed in transitionContext.completeTransition(completed) }
     }
 
 }

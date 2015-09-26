@@ -27,7 +27,11 @@ class MSTumblrMenuViewController: UICollectionViewController {
     weak var dataSource: MSTumblrMenuViewControllerDataSource?
     weak var delegate: MSTumblrMenuViewControllerDelegate?
     private let menuTransitioningDelegate = MSTumblrMenuTransitioningDelegate()
-    private var isInserted = false
+    private var animationStartTime : CFTimeInterval = 0.0
+    private var displayLink : CADisplayLink?
+    private var animationCounter = 0
+    private let animationDuration = 0.2
+    private var numberOfRows = [Int](count: 2, repeatedValue: 0)
 
     override init(collectionViewLayout layout: UICollectionViewLayout) {
         super.init(collectionViewLayout: layout)
@@ -50,57 +54,76 @@ class MSTumblrMenuViewController: UICollectionViewController {
     }
 
     func addItems() {
-        guard let numberOfSections = self.dataSource?.numberOfSectionsInTumblrMenuViewController(self) else {
+        guard let _ = self.dataSource?.numberOfSectionsInTumblrMenuViewController(self) else {
             return;
         }
-        var items = [NSIndexPath]()
-        for section in 0..<numberOfSections {
-            let numberOfRows = self.dataSource!.tumblrMenuViewController(self, numberOfRowsInSection: section)
-            for item in 0..<numberOfRows {
-                items.append(NSIndexPath(forRow: item, inSection: section))
-            }
+        self.animationStartTime = CACurrentMediaTime()
+        self.animationCounter = 0
+        self.displayLink = CADisplayLink(target: self, selector: "animateInsert:")
+        self.displayLink?.addToRunLoop(NSRunLoop.mainRunLoop(), forMode: NSRunLoopCommonModes)
+    }
+
+    func animateInsert(displayLink: CADisplayLink) {
+        let split = self.displayLink!.timestamp - self.animationStartTime
+        if split < Double(self.animationCounter) * self.animationDuration {
+            return
         }
-//        self.collectionView?.performBatchUpdates({
-//            self.collectionView?.insertSections(NSIndexSet(indexesInRange: NSMakeRange(0, 1)))
-            self.isInserted = true
-            self.collectionView?.insertItemsAtIndexPaths(items)
-//            }, completion: nil)
+
+        let numberOfSections = self.dataSource!.numberOfSectionsInTumblrMenuViewController(self)
+        let numberOfRows = self.dataSource!.tumblrMenuViewController(self, numberOfRowsInSection: 0)
+        let itemToInsert = NSIndexPath(forRow: self.animationCounter % numberOfRows, inSection: self.animationCounter / numberOfRows)
+        self.animationCounter++
+        self.numberOfRows[itemToInsert.section] = self.numberOfRows[itemToInsert.section] + 1
+        dispatch_async(dispatch_get_main_queue()) {
+            self.collectionView?.insertItemsAtIndexPaths([itemToInsert])
+        }
+
+        if self.animationCounter == numberOfRows * numberOfSections {
+            self.displayLink!.removeFromRunLoop(NSRunLoop.mainRunLoop(), forMode: NSRunLoopCommonModes)
+            self.displayLink = nil
+        }
     }
 
     func removeItems() {
-        guard let numberOfSections = self.dataSource?.numberOfSectionsInTumblrMenuViewController(self) else {
+        guard let _ = self.dataSource?.numberOfSectionsInTumblrMenuViewController(self) else {
             return;
         }
-        var items = [NSIndexPath]()
-        for section in 0..<numberOfSections {
-            let numberOfRows = self.dataSource!.tumblrMenuViewController(self, numberOfRowsInSection: section)
-            for item in 0..<numberOfRows {
-                items.append(NSIndexPath(forRow: item, inSection: section))
-            }
-        }
-//        self.collectionView?.performBatchUpdates({
-            self.isInserted = false
-//        let layout = self.collectionViewLayout as! MSTumblrMenuLayout
-//        layout.cachedAttributes = [NSIndexPath: MSTumblrMenuLayoutAttributes]()
+        self.animationStartTime = CACurrentMediaTime()
+        self.animationCounter = 0
+        self.displayLink = CADisplayLink(target: self, selector: "animateRemove:")
+        self.displayLink?.addToRunLoop(NSRunLoop.mainRunLoop(), forMode: NSRunLoopCommonModes)
+    }
 
-            self.collectionView?.deleteItemsAtIndexPaths(items)
-//            }, completion: nil)
+    func animateRemove(displayLink: CADisplayLink) {
+        let split = self.displayLink!.timestamp - self.animationStartTime
+        if split < Double(self.animationCounter) * self.animationDuration {
+            return
+        }
+
+        let numberOfSections = self.dataSource!.numberOfSectionsInTumblrMenuViewController(self)
+        let numberOfRows = self.dataSource!.tumblrMenuViewController(self, numberOfRowsInSection: 0)
+        let section = self.animationCounter / numberOfRows
+        let itemToDelete = NSIndexPath(forRow: self.numberOfRows[section] - 1, inSection: section)
+        self.animationCounter++
+        self.numberOfRows[itemToDelete.section] = self.numberOfRows[section] - 1
+        dispatch_async(dispatch_get_main_queue()) {
+            self.collectionView?.deleteItemsAtIndexPaths([itemToDelete])
+        }
+
+        if self.animationCounter == numberOfRows * numberOfSections {
+            self.displayLink!.removeFromRunLoop(NSRunLoop.mainRunLoop(), forMode: NSRunLoopCommonModes)
+            self.displayLink = nil
+        }
     }
 
     // MARK: UICollectionViewControllerDataSource methods
 
     override func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
-//        guard self.isInserted else {
-//            return 0
-//        }
         return self.dataSource!.numberOfSectionsInTumblrMenuViewController(self)
     }
 
     override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        guard self.isInserted else {
-            return 0
-        }
-        return self.dataSource!.tumblrMenuViewController(self, numberOfRowsInSection: section)
+        return self.numberOfRows[section]
     }
 
     override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
