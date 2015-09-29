@@ -130,8 +130,41 @@ class MSTumblrMenuViewController: UICollectionViewController {
         let menuCell = collectionView.dequeueReusableCellWithReuseIdentifier(MSTumblrMenuViewController.kMenuCellIdentifier, forIndexPath: indexPath) as! MSTumblrMenuCell
         menuCell.image = self.dataSource?.tumblrMenuViewController(self, itemImageForRowAtIndexPath: indexPath)
         menuCell.title = self.dataSource?.tumblrMenuViewController(self, itemTitleForRowAtIndexPath: indexPath)
-        menuCell.layer.transform = CATransform3DMakeTranslation(0, CGRectGetHeight(self.collectionView!.bounds), 0)
-        UIView.animateWithDuration(1.0, delay: 0, usingSpringWithDamping: 0.9, initialSpringVelocity: 15, options: UIViewAnimationOptions(rawValue: 0), animations: { () -> Void in
+
+//        UIView.beginAnimations("transform", context: nil)
+//        UIView.setAnimationDuration(3)
+//        //        UIView.setAnimationDelay(menuCell.layer.convertTime(CACurrentMediaTime(), fromLayer: nil) + 0.2)
+//        CATransaction.begin()
+//        CATransaction.setAnimationTimingFunction(CAMediaTimingFunction(controlPoints: 0.3, 0.5, 1.0, 1.0))
+//        menuCell.layer.transform = CATransform3DIdentity
+//        CATransaction.commit()
+//        UIView.commitAnimations()
+
+        let duration = 0.36
+        let animationInterval = duration / 5
+//        let numberOfSections = self.dataSource!.numberOfSectionsInTumblrMenuViewController(self)
+        let numberOfRows = self.dataSource!.tumblrMenuViewController(self, numberOfRowsInSection: indexPath.section)
+        var delayInSeconds = Double(indexPath.section) * Double(numberOfRows) * animationInterval
+        if (indexPath.row == 0) {
+            delayInSeconds += animationInterval
+        } else if (indexPath.row == numberOfRows - 1) {
+            delayInSeconds += 2 * animationInterval
+        }
+
+        let yOffset = CGRectGetHeight(self.collectionView!.bounds)
+        menuCell.layer.transform = CATransform3DMakeTranslation(0, yOffset, 0)
+
+//        let positionAnimation  = CABasicAnimation(keyPath: "transform")
+//        positionAnimation.fromValue = NSValue.init(CATransform3D: CATransform3DMakeTranslation(0, CGRectGetHeight(self.collectionView!.bounds), 0))
+//        positionAnimation.toValue = NSValue.init(CATransform3D: CATransform3DIdentity)
+//        positionAnimation.timingFunction = CAMediaTimingFunction(controlPoints: 0.3, 0.5, 1.0, 1.0);
+//        positionAnimation.duration = duration;
+////        positionAnimation.removedOnCompletion = false;
+////        positionAnimation.fillMode = kCAFillModeForwards;
+//        positionAnimation.beginTime = delayInSeconds + menuCell.layer.convertTime(CACurrentMediaTime(), fromLayer: nil)
+//        menuCell.contentView.layer.addAnimation(positionAnimation, forKey: "positionAnimation")
+
+        UIView.animateWithDuration(duration, delay: delayInSeconds, options: UIViewAnimationOptions(rawValue: 0), animations: { () -> Void in
             menuCell.layer.transform = CATransform3DIdentity
             menuCell.layer.opacity = 1.0
             }, completion: nil)
