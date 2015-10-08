@@ -21,6 +21,10 @@ protocol MSTumblrMenuViewControllerDelegate: NSObjectProtocol {
     func tumblrMenuViewController(tumblrMenuViewController: MSTumblrMenuViewController, didSelectRowAtIndexPath indexPath: NSIndexPath)
 }
 
+enum MSTumblrMenuAnimation: UInt {
+    case None, Show, Hide
+}
+
 class MSTumblrMenuViewController: UICollectionViewController {
 
     static let kMenuCellIdentifier = "MenuCellIdentifier"
@@ -31,6 +35,8 @@ class MSTumblrMenuViewController: UICollectionViewController {
     private var displayLink : CADisplayLink?
     private var animationCounter = 0
     private let animationDuration = 0.2
+    private let duration = 1.0
+    private var animationType = MSTumblrMenuAnimation.None
     private var numberOfRows = [Int](count: 2, repeatedValue: 0)
 
     override init(collectionViewLayout layout: UICollectionViewLayout) {
@@ -46,11 +52,30 @@ class MSTumblrMenuViewController: UICollectionViewController {
     private func commonInit() {
         self.modalPresentationStyle = .Custom
         self.transitioningDelegate = self.menuTransitioningDelegate
-        self.collectionView!.viewForBaselineLayout().layer.speed = 0.5 // slow down the default insert/delete animation duration
+//        self.collectionView!.viewForBaselineLayout().layer.speed = 0.5 // slow down the default insert/delete animation duration
     }
 
     override func viewDidLoad() {
         self.collectionView?.registerClass(MSTumblrMenuCell.self, forCellWithReuseIdentifier: MSTumblrMenuViewController.kMenuCellIdentifier)
+    }
+
+    func show() {
+        self.animationType = .Show
+        self.collectionView!.reloadData()
+    }
+
+    func hide() {
+        self.animationType = .Hide
+        self.collectionView!.reloadData()
+    }
+
+    func completeAnimation() {
+        self.animationType = .None
+    }
+
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.collectionView!.reloadData()
     }
 
     func addItems() {
@@ -131,18 +156,14 @@ class MSTumblrMenuViewController: UICollectionViewController {
         menuCell.image = self.dataSource?.tumblrMenuViewController(self, itemImageForRowAtIndexPath: indexPath)
         menuCell.title = self.dataSource?.tumblrMenuViewController(self, itemTitleForRowAtIndexPath: indexPath)
 
-//        UIView.beginAnimations("transform", context: nil)
-//        UIView.setAnimationDuration(3)
-//        //        UIView.setAnimationDelay(menuCell.layer.convertTime(CACurrentMediaTime(), fromLayer: nil) + 0.2)
-//        CATransaction.begin()
-//        CATransaction.setAnimationTimingFunction(CAMediaTimingFunction(controlPoints: 0.3, 0.5, 1.0, 1.0))
-//        menuCell.layer.transform = CATransform3DIdentity
-//        CATransaction.commit()
-//        UIView.commitAnimations()
+        animateCellIfNeeded(menuCell, indexPath: indexPath)
 
-        let duration = 0.36
-        let animationInterval = duration / 5
-//        let numberOfSections = self.dataSource!.numberOfSectionsInTumblrMenuViewController(self)
+        return menuCell
+    }
+
+    private func animateCellIfNeeded(cell: MSTumblrMenuCell, indexPath: NSIndexPath) {
+        let animationInterval = duration / 10
+        let numberOfSections = self.dataSource!.numberOfSectionsInTumblrMenuViewController(self)
         let numberOfRows = self.dataSource!.tumblrMenuViewController(self, numberOfRowsInSection: indexPath.section)
         var delayInSeconds = Double(indexPath.section) * Double(numberOfRows) * animationInterval
         if (indexPath.row == 0) {
@@ -151,24 +172,25 @@ class MSTumblrMenuViewController: UICollectionViewController {
             delayInSeconds += 2 * animationInterval
         }
 
-        let yOffset = CGRectGetHeight(self.collectionView!.bounds)
-        menuCell.layer.transform = CATransform3DMakeTranslation(0, yOffset, 0)
+        if (self.animationType == .Show) {
 
-//        let positionAnimation  = CABasicAnimation(keyPath: "transform")
-//        positionAnimation.fromValue = NSValue.init(CATransform3D: CATransform3DMakeTranslation(0, CGRectGetHeight(self.collectionView!.bounds), 0))
-//        positionAnimation.toValue = NSValue.init(CATransform3D: CATransform3DIdentity)
-//        positionAnimation.timingFunction = CAMediaTimingFunction(controlPoints: 0.3, 0.5, 1.0, 1.0);
-//        positionAnimation.duration = duration;
-////        positionAnimation.removedOnCompletion = false;
-////        positionAnimation.fillMode = kCAFillModeForwards;
-//        positionAnimation.beginTime = delayInSeconds + menuCell.layer.convertTime(CACurrentMediaTime(), fromLayer: nil)
-//        menuCell.contentView.layer.addAnimation(positionAnimation, forKey: "positionAnimation")
+            let yOffset = CGRectGetHeight(self.collectionView!.bounds) / 2 + CGFloat(indexPath.section) * 200.0
+            cell.layer.transform = CATransform3DMakeTranslation(0, yOffset, 0)
+            cell.layer.opacity = 0.0
+            UIView.animateWithDuration(duration, delay: delayInSeconds, usingSpringWithDamping: 0.8, initialSpringVelocity: 1.0, options: [], animations: { () -> Void in
+                cell.layer.transform = CATransform3DIdentity
+                cell.layer.opacity = 1.0
+                }, completion: nil)
+        } else if (self.animationType == .Hide) {
 
-        UIView.animateWithDuration(duration, delay: delayInSeconds, options: UIViewAnimationOptions(rawValue: 0), animations: { () -> Void in
-            menuCell.layer.transform = CATransform3DIdentity
-            menuCell.layer.opacity = 1.0
-            }, completion: nil)
-        return menuCell
+            let yOffset = CGRectGetHeight(self.collectionView!.bounds) / 2 + CGFloat(numberOfSections - indexPath.section) * 200.0
+            cell.layer.transform = CATransform3DIdentity
+            cell.layer.opacity = 1.0
+            UIView.animateWithDuration(duration, delay: delayInSeconds, usingSpringWithDamping: 0.8, initialSpringVelocity: 1.0, options: [], animations: { () -> Void in
+                cell.layer.transform = CATransform3DMakeTranslation(0, -yOffset, 0)
+                cell.layer.opacity = 0.0
+                }, completion: nil)
+        }
     }
 
     // MARK: UICollectionViewControllerDelegate methods

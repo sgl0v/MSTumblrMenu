@@ -25,21 +25,24 @@ extension MSTumblrMenuAnimationController: UIViewControllerAnimatedTransitioning
     }
 
     func animateTransition(transitionContext: UIViewControllerContextTransitioning)  {
-//        let menuViewController = transitionContext.viewControllerForKey(self.presenting ? UITransitionContextToViewControllerKey : UITransitionContextFromViewControllerKey) as! MSTumblrMenuViewController
+        let menuViewController = transitionContext.viewControllerForKey(self.presenting ? UITransitionContextToViewControllerKey : UITransitionContextFromViewControllerKey) as! MSTumblrMenuViewController
         let presentedControllerView = transitionContext.viewForKey(self.presenting ? UITransitionContextToViewKey : UITransitionContextFromViewKey)!
         let containerView = transitionContext.containerView()
 
         if self.presenting {
             presentedControllerView.alpha = 0
             containerView!.addSubview(presentedControllerView)
-//            menuViewController.addItems()
+            menuViewController.show()
         } else {
-//            menuViewController.removeItems()
+            menuViewController.hide()
         }
 
         UIView.animateWithDuration(self.transitionDuration(transitionContext), animations: {
             presentedControllerView.alpha = self.presenting ? 0.7 : 0
-            }) {completed in transitionContext.completeTransition(completed) }
+            }) {completed in
+                menuViewController.completeAnimation()
+                transitionContext.completeTransition(completed)
+        }
     }
 
 }
