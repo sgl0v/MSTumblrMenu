@@ -31,13 +31,8 @@ class MSTumblrMenuViewController: UICollectionViewController {
     weak var dataSource: MSTumblrMenuViewControllerDataSource?
     weak var delegate: MSTumblrMenuViewControllerDelegate?
     private let menuTransitioningDelegate = MSTumblrMenuTransitioningDelegate()
-    private var animationStartTime : CFTimeInterval = 0.0
-    private var displayLink : CADisplayLink?
-    private var animationCounter = 0
-    private let animationDuration = 0.2
-    private let duration = 1.0
+    private let animationDuration = 1.0
     private var animationType = MSTumblrMenuAnimation.None
-    private var numberOfRows = [Int](count: 2, repeatedValue: 0)
 
     override init(collectionViewLayout layout: UICollectionViewLayout) {
         super.init(collectionViewLayout: layout)
@@ -78,69 +73,6 @@ class MSTumblrMenuViewController: UICollectionViewController {
         self.collectionView!.reloadData()
     }
 
-    func addItems() {
-        guard let _ = self.dataSource?.numberOfSectionsInTumblrMenuViewController(self) else {
-            return;
-        }
-        self.animationStartTime = CACurrentMediaTime()
-        self.animationCounter = 0
-        self.displayLink = CADisplayLink(target: self, selector: "animateInsert:")
-        self.displayLink?.addToRunLoop(NSRunLoop.mainRunLoop(), forMode: NSRunLoopCommonModes)
-    }
-
-    func animateInsert(displayLink: CADisplayLink) {
-        let split = self.displayLink!.timestamp - self.animationStartTime
-        if split < Double(self.animationCounter) * self.animationDuration {
-            return
-        }
-
-        let numberOfSections = self.dataSource!.numberOfSectionsInTumblrMenuViewController(self)
-        let numberOfRows = self.dataSource!.tumblrMenuViewController(self, numberOfRowsInSection: 0)
-        let itemToInsert = NSIndexPath(forRow: self.animationCounter % numberOfRows, inSection: self.animationCounter / numberOfRows)
-        self.animationCounter++
-        self.numberOfRows[itemToInsert.section] = self.numberOfRows[itemToInsert.section] + 1
-        dispatch_async(dispatch_get_main_queue()) {
-            self.collectionView?.insertItemsAtIndexPaths([itemToInsert])
-        }
-
-        if self.animationCounter == numberOfRows * numberOfSections {
-            self.displayLink!.removeFromRunLoop(NSRunLoop.mainRunLoop(), forMode: NSRunLoopCommonModes)
-            self.displayLink = nil
-        }
-    }
-
-    func removeItems() {
-        guard let _ = self.dataSource?.numberOfSectionsInTumblrMenuViewController(self) else {
-            return;
-        }
-        self.animationStartTime = CACurrentMediaTime()
-        self.animationCounter = 0
-        self.displayLink = CADisplayLink(target: self, selector: "animateRemove:")
-        self.displayLink?.addToRunLoop(NSRunLoop.mainRunLoop(), forMode: NSRunLoopCommonModes)
-    }
-
-    func animateRemove(displayLink: CADisplayLink) {
-        let split = self.displayLink!.timestamp - self.animationStartTime
-        if split < Double(self.animationCounter) * self.animationDuration {
-            return
-        }
-
-        let numberOfSections = self.dataSource!.numberOfSectionsInTumblrMenuViewController(self)
-        let numberOfRows = self.dataSource!.tumblrMenuViewController(self, numberOfRowsInSection: 0)
-        let section = self.animationCounter / numberOfRows
-        let itemToDelete = NSIndexPath(forRow: self.numberOfRows[section] - 1, inSection: section)
-        self.animationCounter++
-        self.numberOfRows[itemToDelete.section] = self.numberOfRows[section] - 1
-        dispatch_async(dispatch_get_main_queue()) {
-            self.collectionView?.deleteItemsAtIndexPaths([itemToDelete])
-        }
-
-        if self.animationCounter == numberOfRows * numberOfSections {
-            self.displayLink!.removeFromRunLoop(NSRunLoop.mainRunLoop(), forMode: NSRunLoopCommonModes)
-            self.displayLink = nil
-        }
-    }
-
     // MARK: UICollectionViewControllerDataSource methods
 
     override func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
@@ -162,7 +94,7 @@ class MSTumblrMenuViewController: UICollectionViewController {
     }
 
     private func animateCellIfNeeded(cell: MSTumblrMenuCell, indexPath: NSIndexPath) {
-        let animationInterval = duration / 10
+        let animationInterval = animationDuration / 10
         let numberOfSections = self.dataSource!.numberOfSectionsInTumblrMenuViewController(self)
         let numberOfRows = self.dataSource!.tumblrMenuViewController(self, numberOfRowsInSection: indexPath.section)
         var delayInSeconds = Double(indexPath.section) * Double(numberOfRows) * animationInterval
@@ -177,7 +109,7 @@ class MSTumblrMenuViewController: UICollectionViewController {
             let yOffset = CGRectGetHeight(self.collectionView!.bounds) / 2 + CGFloat(indexPath.section) * 200.0
             cell.layer.transform = CATransform3DMakeTranslation(0, yOffset, 0)
             cell.layer.opacity = 0.0
-            UIView.animateWithDuration(duration, delay: delayInSeconds, usingSpringWithDamping: 0.8, initialSpringVelocity: 1.0, options: [], animations: { () -> Void in
+            UIView.animateWithDuration(animationDuration, delay: delayInSeconds, usingSpringWithDamping: 0.8, initialSpringVelocity: 1.0, options: [], animations: { () -> Void in
                 cell.layer.transform = CATransform3DIdentity
                 cell.layer.opacity = 1.0
                 }, completion: nil)
@@ -186,7 +118,7 @@ class MSTumblrMenuViewController: UICollectionViewController {
             let yOffset = CGRectGetHeight(self.collectionView!.bounds) / 2 + CGFloat(numberOfSections - indexPath.section) * 200.0
             cell.layer.transform = CATransform3DIdentity
             cell.layer.opacity = 1.0
-            UIView.animateWithDuration(duration, delay: delayInSeconds, usingSpringWithDamping: 0.8, initialSpringVelocity: 1.0, options: [], animations: { () -> Void in
+            UIView.animateWithDuration(animationDuration, delay: delayInSeconds, usingSpringWithDamping: 0.8, initialSpringVelocity: 1.0, options: [], animations: { () -> Void in
                 cell.layer.transform = CATransform3DMakeTranslation(0, -yOffset, 0)
                 cell.layer.opacity = 0.0
                 }, completion: nil)

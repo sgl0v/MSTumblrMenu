@@ -8,14 +8,11 @@
 
 import UIKit
 
-class MSTumblrMenuTransitioningDelegate: NSObject, UIViewControllerTransitioningDelegate {
+class MSTumblrMenuTransitioningDelegate: NSObject {
 
-//    private var animationController: UIViewControllerAnimatedTransitioning
-//
-//    init(animationController: UIViewControllerAnimatedTransitioning) {
-//        self.animationController = animationController
-//        super.init()
-//    }
+}
+
+extension MSTumblrMenuTransitioningDelegate : UIViewControllerTransitioningDelegate {
 
     func animationControllerForPresentedController(presented: UIViewController, presentingController presenting: UIViewController, sourceController source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         return MSTumblrMenuAnimationController(presenting: true)
@@ -24,4 +21,5 @@ class MSTumblrMenuTransitioningDelegate: NSObject, UIViewControllerTransitioning
     func animationControllerForDismissedController(dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         return MSTumblrMenuAnimationController(presenting: false)
     }
+
 }
