@@ -19,11 +19,7 @@
 		5E3B1E9E1B7BDCF600100204 /* post_type_bubble_text@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5E3B1E921B7BDCF600100204 /* post_type_bubble_text@2x.png */; };
 		5E3B1E9F1B7BDCF600100204 /* post_type_bubble_video.png in Resources */ = {isa = PBXBuildFile; fileRef = 5E3B1E931B7BDCF600100204 /* post_type_bubble_video.png */; };
 		5E3B1EA01B7BDCF600100204 /* post_type_bubble_video@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5E3B1E941B7BDCF600100204 /* post_type_bubble_video@2x.png */; };
-		5E99B36E1B66DF5E00CD2301 /* MSSnapBehavior.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E99B36D1B66DF5E00CD2301 /* MSSnapBehavior.swift */; };
 		5E99B36F1B66E3DF00CD2301 /* MSTumblrMenuCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ED2D7431B50533000D32B62 /* MSTumblrMenuCell.swift */; };
-		5E99B3701B66E3E100CD2301 /* MSSnapBehavior.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E99B36D1B66DF5E00CD2301 /* MSSnapBehavior.swift */; };
-		5E99B3721B68012700CD2301 /* MSTumblrMenuLayoutAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E99B3711B68012700CD2301 /* MSTumblrMenuLayoutAttributes.swift */; };
-		5E99B3731B68021800CD2301 /* MSTumblrMenuLayoutAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E99B3711B68012700CD2301 /* MSTumblrMenuLayoutAttributes.swift */; };
 		5ED2D71B1B4F13AA00D32B62 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ED2D71A1B4F13AA00D32B62 /* AppDelegate.swift */; };
 		5ED2D71D1B4F13AA00D32B62 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ED2D71C1B4F13AA00D32B62 /* ViewController.swift */; };
 		5ED2D7201B4F13AA00D32B62 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5ED2D71E1B4F13AA00D32B62 /* Main.storyboard */; };
@@ -33,7 +29,6 @@
 		5ED2D73B1B4F157500D32B62 /* MSTumblrMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ED2D73A1B4F157500D32B62 /* MSTumblrMenuViewController.swift */; };
 		5ED2D73D1B4F171700D32B62 /* MSTumblrMenuAnimationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ED2D73C1B4F171700D32B62 /* MSTumblrMenuAnimationController.swift */; };
 		5ED2D73F1B4F180500D32B62 /* MSTumblrMenuTransitioningDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ED2D73E1B4F180500D32B62 /* MSTumblrMenuTransitioningDelegate.swift */; };
-		5ED2D7421B504F3600D32B62 /* UIViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ED2D7411B504F3600D32B62 /* UIViewExtension.swift */; };
 		5ED2D7441B50533000D32B62 /* MSTumblrMenuCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ED2D7431B50533000D32B62 /* MSTumblrMenuCell.swift */; };
 		5ED2D7461B54661000D32B62 /* MSTumblrMenuLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ED2D7451B54661000D32B62 /* MSTumblrMenuLayout.swift */; };
 		5ED2D7471B54661000D32B62 /* MSTumblrMenuLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ED2D7451B54661000D32B62 /* MSTumblrMenuLayout.swift */; };
@@ -62,8 +57,6 @@
 		5E3B1E921B7BDCF600100204 /* post_type_bubble_text@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "post_type_bubble_text@2x.png"; sourceTree = "<group>"; };
 		5E3B1E931B7BDCF600100204 /* post_type_bubble_video.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = post_type_bubble_video.png; sourceTree = "<group>"; };
 		5E3B1E941B7BDCF600100204 /* post_type_bubble_video@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "post_type_bubble_video@2x.png"; sourceTree = "<group>"; };
-		5E99B36D1B66DF5E00CD2301 /* MSSnapBehavior.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MSSnapBehavior.swift; sourceTree = "<group>"; };
-		5E99B3711B68012700CD2301 /* MSTumblrMenuLayoutAttributes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MSTumblrMenuLayoutAttributes.swift; sourceTree = "<group>"; };
 		5ED2D7151B4F13AA00D32B62 /* MSTumblrMenu.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MSTumblrMenu.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5ED2D7191B4F13AA00D32B62 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5ED2D71A1B4F13AA00D32B62 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -77,7 +70,6 @@
 		5ED2D73A1B4F157500D32B62 /* MSTumblrMenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MSTumblrMenuViewController.swift; sourceTree = "<group>"; };
 		5ED2D73C1B4F171700D32B62 /* MSTumblrMenuAnimationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MSTumblrMenuAnimationController.swift; sourceTree = "<group>"; };
 		5ED2D73E1B4F180500D32B62 /* MSTumblrMenuTransitioningDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MSTumblrMenuTransitioningDelegate.swift; sourceTree = "<group>"; };
-		5ED2D7411B504F3600D32B62 /* UIViewExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewExtension.swift; sourceTree = "<group>"; };
 		5ED2D7431B50533000D32B62 /* MSTumblrMenuCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MSTumblrMenuCell.swift; sourceTree = "<group>"; };
 		5ED2D7451B54661000D32B62 /* MSTumblrMenuLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MSTumblrMenuLayout.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -151,10 +143,7 @@
 				5ED2D7451B54661000D32B62 /* MSTumblrMenuLayout.swift */,
 				5ED2D73C1B4F171700D32B62 /* MSTumblrMenuAnimationController.swift */,
 				5ED2D73E1B4F180500D32B62 /* MSTumblrMenuTransitioningDelegate.swift */,
-				5ED2D7411B504F3600D32B62 /* UIViewExtension.swift */,
 				5ED2D7431B50533000D32B62 /* MSTumblrMenuCell.swift */,
-				5E99B36D1B66DF5E00CD2301 /* MSSnapBehavior.swift */,
-				5E99B3711B68012700CD2301 /* MSTumblrMenuLayoutAttributes.swift */,
 			);
 			path = MSTumblrMenu;
 			sourceTree = "<group>";
@@ -298,12 +287,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				5ED2D7461B54661000D32B62 /* MSTumblrMenuLayout.swift in Sources */,
-				5ED2D7421B504F3600D32B62 /* UIViewExtension.swift in Sources */,
 				5ED2D73B1B4F157500D32B62 /* MSTumblrMenuViewController.swift in Sources */,
-				5E99B3721B68012700CD2301 /* MSTumblrMenuLayoutAttributes.swift in Sources */,
 				5ED2D7441B50533000D32B62 /* MSTumblrMenuCell.swift in Sources */,
 				5ED2D73F1B4F180500D32B62 /* MSTumblrMenuTransitioningDelegate.swift in Sources */,
-				5E99B36E1B66DF5E00CD2301 /* MSSnapBehavior.swift in Sources */,
 				5ED2D73D1B4F171700D32B62 /* MSTumblrMenuAnimationController.swift in Sources */,
 				5ED2D71D1B4F13AA00D32B62 /* ViewController.swift in Sources */,
 				5ED2D71B1B4F13AA00D32B62 /* AppDelegate.swift in Sources */,
@@ -315,9 +301,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5ED2D7471B54661000D32B62 /* MSTumblrMenuLayout.swift in Sources */,
-				5E99B3701B66E3E100CD2301 /* MSSnapBehavior.swift in Sources */,
 				5E99B36F1B66E3DF00CD2301 /* MSTumblrMenuCell.swift in Sources */,
-				5E99B3731B68021800CD2301 /* MSTumblrMenuLayoutAttributes.swift in Sources */,
 				5ED2D7311B4F13AA00D32B62 /* MSTumblrMenuTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
