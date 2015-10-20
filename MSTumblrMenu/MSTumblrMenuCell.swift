@@ -56,6 +56,14 @@ class MSTumblrMenuCell: UICollectionViewCell {
         commonInit()
     }
 
+    func addAnimation(cellAnimation: MSTumblrMenuCellAnimation?) {
+        guard let animation = cellAnimation else {
+            return
+        }
+        animation.initialAction(cell: self)
+        UIView.animateWithDuration(animation.duration, delay: animation.delay, usingSpringWithDamping: animation.damping, initialSpringVelocity: animation.initialSpringVelocity, options: [], animations: { animation.animationAction(cell: self) }, completion: nil)
+    }
+
     private func commonInit() {
         self.translatesAutoresizingMaskIntoConstraints = false
         self.contentView.addSubview(self.imageView)
