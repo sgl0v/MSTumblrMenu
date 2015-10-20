@@ -31,7 +31,6 @@ class MSTumblrMenuViewController: UICollectionViewController {
     weak var dataSource: MSTumblrMenuViewControllerDataSource?
     weak var delegate: MSTumblrMenuViewControllerDelegate?
     private let menuTransitioningDelegate = MSTumblrMenuTransitioningDelegate()
-    private let animationDuration = 1.0
     private var animationType = MSTumblrMenuAnimation.None
 
     override init(collectionViewLayout layout: UICollectionViewLayout) {
@@ -47,7 +46,6 @@ class MSTumblrMenuViewController: UICollectionViewController {
     private func commonInit() {
         self.modalPresentationStyle = .Custom
         self.transitioningDelegate = self.menuTransitioningDelegate
-//        self.collectionView!.viewForBaselineLayout().layer.speed = 0.5 // slow down the default insert/delete animation duration
     }
 
     override func viewDidLoad() {
@@ -87,14 +85,21 @@ class MSTumblrMenuViewController: UICollectionViewController {
         let menuCell = collectionView.dequeueReusableCellWithReuseIdentifier(MSTumblrMenuViewController.kMenuCellIdentifier, forIndexPath: indexPath) as! MSTumblrMenuCell
         menuCell.image = self.dataSource?.tumblrMenuViewController(self, itemImageForRowAtIndexPath: indexPath)
         menuCell.title = self.dataSource?.tumblrMenuViewController(self, itemTitleForRowAtIndexPath: indexPath)
-
-        animateCellIfNeeded(menuCell, indexPath: indexPath)
+        menuCell.addAnimation(animation(forCell: menuCell, indexPath:indexPath))
 
         return menuCell
     }
 
-    private func animateCellIfNeeded(cell: MSTumblrMenuCell, indexPath: NSIndexPath) {
-        let animationInterval = animationDuration / 10
+    // MARK: UICollectionViewControllerDelegate methods
+
+    override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+        self.delegate?.tumblrMenuViewController(self, didSelectRowAtIndexPath: indexPath)
+    }
+
+    // MARK: Private
+
+    private func animation(forCell cell: MSTumblrMenuCell, indexPath: NSIndexPath) -> MSTumblrMenuCellAnimation? {
+        let animationInterval = MSTumblrMenuCellAnimationConstants.duration / 10.0
         let numberOfSections = self.dataSource!.numberOfSectionsInTumblrMenuViewController(self)
         let numberOfRows = self.dataSource!.tumblrMenuViewController(self, numberOfRowsInSection: indexPath.section)
         var delayInSeconds = Double(indexPath.section) * Double(numberOfRows) * animationInterval
@@ -104,31 +109,28 @@ class MSTumblrMenuViewController: UICollectionViewController {
             delayInSeconds += 2 * animationInterval
         }
 
-        if (self.animationType == .Show) {
+        let offset = CGRectGetHeight(self.collectionView!.bounds) / 2
 
-            let yOffset = CGRectGetHeight(self.collectionView!.bounds) / 2 + CGFloat(indexPath.section) * 200.0
-            cell.layer.transform = CATransform3DMakeTranslation(0, yOffset, 0)
-            cell.layer.opacity = 0.0
-            UIView.animateWithDuration(animationDuration, delay: delayInSeconds, usingSpringWithDamping: 0.8, initialSpringVelocity: 1.0, options: [], animations: { () -> Void in
+        switch self.animationType {
+        case .Show:
+            return MSTumblrMenuCellAnimation(delay: delayInSeconds, initialAction: { cell in
+                cell.layer.transform = CATransform3DMakeTranslation(0, offset + CGFloat(indexPath.section) * 200.0, 0)
+                cell.layer.opacity = 0.0
+                }, animationAction: { cell in
+                    cell.layer.transform = CATransform3DIdentity
+                    cell.layer.opacity = 1.0
+            })
+        case .Hide:
+            return MSTumblrMenuCellAnimation(delay: delayInSeconds, initialAction: { cell in
                 cell.layer.transform = CATransform3DIdentity
                 cell.layer.opacity = 1.0
-                }, completion: nil)
-        } else if (self.animationType == .Hide) {
-
-            let yOffset = CGRectGetHeight(self.collectionView!.bounds) / 2 + CGFloat(numberOfSections - indexPath.section) * 200.0
-            cell.layer.transform = CATransform3DIdentity
-            cell.layer.opacity = 1.0
-            UIView.animateWithDuration(animationDuration, delay: delayInSeconds, usingSpringWithDamping: 0.8, initialSpringVelocity: 1.0, options: [], animations: { () -> Void in
-                cell.layer.transform = CATransform3DMakeTranslation(0, -yOffset, 0)
-                cell.layer.opacity = 0.0
-                }, completion: nil)
+                }, animationAction: { cell in
+                    cell.layer.transform = CATransform3DMakeTranslation(0, -(offset + CGFloat(numberOfSections - indexPath.section) * 200.0), 0)
+                    cell.layer.opacity = 0.0
+            })
+        default:
+            return nil
         }
-    }
-
-    // MARK: UICollectionViewControllerDelegate methods
-
-    override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        self.delegate?.tumblrMenuViewController(self, didSelectRowAtIndexPath: indexPath)
     }
 
 }
