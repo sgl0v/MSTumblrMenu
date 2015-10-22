@@ -123,13 +123,18 @@ class MSTumblrMenuViewController: UICollectionViewController {
     }
 
     override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return self.numberOfRows[section]
+        return self.dataSource!.tumblrMenuViewController(self, numberOfRowsInSection: section)
     }
 
     override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let menuCell = collectionView.dequeueReusableCellWithReuseIdentifier(MSTumblrMenuViewController.kMenuCellIdentifier, forIndexPath: indexPath) as! MSTumblrMenuCell
         menuCell.image = self.dataSource?.tumblrMenuViewController(self, itemImageForRowAtIndexPath: indexPath)
         menuCell.title = self.dataSource?.tumblrMenuViewController(self, itemTitleForRowAtIndexPath: indexPath)
+        menuCell.layer.transform = CATransform3DMakeTranslation(0, CGRectGetHeight(self.collectionView!.bounds), 0)
+        UIView.animateWithDuration(1.0, delay: 0, usingSpringWithDamping: 0.9, initialSpringVelocity: 15, options: UIViewAnimationOptions(rawValue: 0), animations: { () -> Void in
+            menuCell.layer.transform = CATransform3DIdentity
+            menuCell.layer.opacity = 1.0
+            }, completion: nil)
         return menuCell
     }
 
