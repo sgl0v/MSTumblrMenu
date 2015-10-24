@@ -18,6 +18,8 @@ class MSTumblrMenuCell: UICollectionViewCell {
         titleLabel.textAlignment = .Center
         titleLabel.textColor = UIColor.whiteColor()
         titleLabel.font = UIFont.boldSystemFontOfSize(18.0)
+        titleLabel.adjustsFontSizeToFitWidth = true
+        titleLabel.minimumScaleFactor = 0.7
         return titleLabel
     }()
     
@@ -77,6 +79,7 @@ class MSTumblrMenuCell: UICollectionViewCell {
             ))
         self.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|[title]|", options: NSLayoutFormatOptions(rawValue:0), metrics: nil, views: views))
         self.addConstraint(NSLayoutConstraint(item: self.imageView, attribute: .Width, relatedBy: .Equal, toItem: self.imageView, attribute: .Height, multiplier: 1.0, constant: 0.0))
+        self.addConstraint(NSLayoutConstraint(item: self.imageView, attribute: .CenterX, relatedBy: .Equal, toItem: self, attribute: .CenterX, multiplier: 1.0, constant: 0.0))
         self.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[image][title]|", options: NSLayoutFormatOptions(rawValue:0), metrics: nil, views: views))
     }
 

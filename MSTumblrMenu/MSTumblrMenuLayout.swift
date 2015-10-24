@@ -15,7 +15,7 @@ class MSTumblrMenuLayout: UICollectionViewLayout {
     private var indexPathsToAnimate = [NSIndexPath]()
     private var layoutAttributes: [NSIndexPath: UICollectionViewLayoutAttributes]!
 
-    init(itemSize: CGSize = CGSizeMake(100, 120), itemSpacing: CGFloat = 20.0) {
+    init(itemSize: CGSize = CGSizeMake(100, 120), itemSpacing: CGFloat = 15.0) {
         self.itemSize = itemSize
         self.itemSpacing = itemSpacing
         super.init()
@@ -64,7 +64,7 @@ class MSTumblrMenuLayout: UICollectionViewLayout {
         let offsetY = (height - CGFloat(numberOfSections) * (self.itemSize.height + self.itemSpacing) + self.itemSpacing) / 2
         for section in 0..<numberOfSections {
             let numberOfItems = self.collectionView!.numberOfItemsInSection(section)
-            let offsetX = (width - CGFloat(numberOfItems) * (self.itemSize.width + self.itemSpacing) + self.itemSpacing) / 2
+            let offsetX = (width - CGFloat(numberOfItems) * self.itemSize.width - CGFloat(numberOfItems - 1) * self.itemSpacing) / 2
             for row in 0..<numberOfItems {
                 let indexPath = NSIndexPath(forRow: row, inSection: section)
                 let attributes = UICollectionViewLayoutAttributes(forCellWithIndexPath: indexPath)
