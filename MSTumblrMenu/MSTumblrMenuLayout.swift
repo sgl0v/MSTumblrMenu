@@ -10,10 +10,20 @@ import UIKit
 
 class MSTumblrMenuLayout: UICollectionViewLayout {
 
-    var cellSize = CGSizeMake(100, 120)
-    let cellSpace: CGFloat = 20.0
+    var itemSize: CGSize
+    var itemSpacing: CGFloat
     private var indexPathsToAnimate = [NSIndexPath]()
     private var layoutAttributes: [NSIndexPath: UICollectionViewLayoutAttributes]!
+
+    init(itemSize: CGSize = CGSizeMake(100, 120), itemSpacing: CGFloat = 20.0) {
+        self.itemSize = itemSize
+        self.itemSpacing = itemSpacing
+        super.init()
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
     override func prepareLayout() {
         super.prepareLayout()
@@ -51,15 +61,15 @@ class MSTumblrMenuLayout: UICollectionViewLayout {
         let height = self.collectionViewContentSize().height
         let width = self.collectionViewContentSize().width
         let numberOfSections = self.collectionView!.numberOfSections()
-        let minY = (height - CGFloat(numberOfSections) * (self.cellSize.height + self.cellSpace) + self.cellSpace) / 2
+        let offsetY = (height - CGFloat(numberOfSections) * (self.itemSize.height + self.itemSpacing) + self.itemSpacing) / 2
         for section in 0..<numberOfSections {
             let numberOfItems = self.collectionView!.numberOfItemsInSection(section)
-            let minX = (width - CGFloat(numberOfItems) * (self.cellSize.width + self.cellSpace) + self.cellSpace) / 2
+            let offsetX = (width - CGFloat(numberOfItems) * (self.itemSize.width + self.itemSpacing) + self.itemSpacing) / 2
             for row in 0..<numberOfItems {
                 let indexPath = NSIndexPath(forRow: row, inSection: section)
                 let attributes = UICollectionViewLayoutAttributes(forCellWithIndexPath: indexPath)
-                attributes.size = self.cellSize
-                attributes.center = CGPointMake(minX + CGFloat(indexPath.row) * (self.cellSize.width + self.cellSpace) + self.cellSize.width / 2, minY + CGFloat(indexPath.section) * (self.cellSize.height + self.cellSpace) + self.cellSize.height / 2)
+                attributes.size = self.itemSize
+                attributes.center = CGPointMake(offsetX + CGFloat(indexPath.row) * (self.itemSize.width + self.itemSpacing) + self.itemSize.width / 2, offsetY + CGFloat(indexPath.section) * (self.itemSize.height + self.itemSpacing) + self.itemSize.height / 2)
                 layoutAttributes[indexPath] = attributes
             }
         }
