@@ -8,11 +8,10 @@
 
 import UIKit
 
-class MSTumblrMenuTransitioningDelegate: NSObject {
-
-}
-
-extension MSTumblrMenuTransitioningDelegate : UIViewControllerTransitioningDelegate {
+/**
+    The `MSTumblrMenuTransitioningDelegate` class implements interactive transition between view controllers.
+*/
+class MSTumblrMenuTransitioningDelegate : NSObject, UIViewControllerTransitioningDelegate {
 
     func animationControllerForPresentedController(presented: UIViewController, presentingController presenting: UIViewController, sourceController source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         return MSTumblrMenuAnimationController(presenting: true)

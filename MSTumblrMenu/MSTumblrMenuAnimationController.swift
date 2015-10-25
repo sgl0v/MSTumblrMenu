@@ -8,8 +8,12 @@
 
 import UIKit
 
+/**
+    The `MSTumblrMenuAnimationController` class implements the animations for a custom view controller transition.
+*/
 class MSTumblrMenuAnimationController: NSObject {
 
+    private let kDefaultTransitionDuration = 2.0
     private let presenting: Bool
 
     init(presenting: Bool) {
@@ -21,7 +25,7 @@ class MSTumblrMenuAnimationController: NSObject {
 extension MSTumblrMenuAnimationController: UIViewControllerAnimatedTransitioning {
 
     func transitionDuration(transitionContext: UIViewControllerContextTransitioning?) -> NSTimeInterval {
-        return 2
+        return kDefaultTransitionDuration
     }
 
     func animateTransition(transitionContext: UIViewControllerContextTransitioning)  {

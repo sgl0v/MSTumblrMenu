@@ -21,15 +21,25 @@ protocol MSTumblrMenuViewControllerDelegate: NSObjectProtocol {
     func tumblrMenuViewController(tumblrMenuViewController: MSTumblrMenuViewController, didSelectRowAtIndexPath indexPath: NSIndexPath)
 }
 
+/**
+    Defines the menu animation type.
+
+    - None: No animattion.
+    - Show: Animate the menu items appearance.
+    - Hide: Animate the menu items appearance.
+*/
 enum MSTumblrMenuAnimation: UInt {
     case None, Show, Hide
 }
 
+/**
+    The `MSTumblrMenuViewController` class represents a view controller whose content consists of a tumblr menu.
+*/
 class MSTumblrMenuViewController: UICollectionViewController {
 
-    static let kMenuCellIdentifier = "MenuCellIdentifier"
     weak var dataSource: MSTumblrMenuViewControllerDataSource?
     weak var delegate: MSTumblrMenuViewControllerDelegate?
+    private static let kMenuCellIdentifier = "MenuCellIdentifier"
     private let menuTransitioningDelegate = MSTumblrMenuTransitioningDelegate()
     private var animationType = MSTumblrMenuAnimation.None
 

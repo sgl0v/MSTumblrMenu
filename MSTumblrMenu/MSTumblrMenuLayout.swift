@@ -8,6 +8,9 @@
 
 import UIKit
 
+/**
+    The `MSTumblrMenuLayout` instance provides layout information for a tumblr menu.
+*/
 class MSTumblrMenuLayout: UICollectionViewLayout {
 
     var itemSize: CGSize

@@ -8,6 +8,9 @@
 
 import UIKit
 
+/**
+    The `MSTumblrMenuCell` class defines the Tumblr menu cell's UI.
+*/
 class MSTumblrMenuCell: UICollectionViewCell {
 
     private lazy var titleLabel: UILabel! = {
@@ -63,7 +66,7 @@ class MSTumblrMenuCell: UICollectionViewCell {
             return
         }
         animation.initialAction(cell: self)
-        UIView.animateWithDuration(animation.duration, delay: animation.delay, usingSpringWithDamping: animation.damping, initialSpringVelocity: animation.initialSpringVelocity, options: [], animations: { animation.animationAction(cell: self) }, completion: nil)
+        UIView.animateWithDuration(animation.duration, delay: animation.delay, usingSpringWithDamping: animation.damping, initialSpringVelocity: animation.initialSpringVelocity, options: [], animations: {[unowned self] in animation.animationAction(cell: self) }, completion: nil)
     }
 
     private func commonInit() {
