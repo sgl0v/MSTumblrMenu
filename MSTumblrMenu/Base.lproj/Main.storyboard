@@ -18,12 +18,33 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8vs-xx-ky7">
-                                <rect key="frame" x="280" y="286" width="38" height="30"/>
-                                <state key="normal" title="Show">
+                                <rect key="frame" x="280" y="285" width="39" height="33"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <state key="normal" title="4 x 3">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="showMenu:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="Zs0-ga-YvY"/>
+                                    <action selector="show4x3Menu:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="E7Y-SR-jJX"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iqB-E2-QQf">
+                                <rect key="frame" x="280" y="222" width="38" height="33"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <state key="normal" title="3 x 2">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="show3x2Menu:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="JjY-Kd-HOG"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2Jp-U2-H07">
+                                <rect key="frame" x="281" y="348" width="38" height="33"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <state key="normal" title="5 x 5">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="show5x5Menu:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="t2P-e8-VWF"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -31,6 +52,10 @@
                         <constraints>
                             <constraint firstAttribute="centerY" secondItem="8vs-xx-ky7" secondAttribute="centerY" constant="-1" id="Cpb-CY-Y4j"/>
                             <constraint firstAttribute="centerX" secondItem="8vs-xx-ky7" secondAttribute="centerX" constant="1" id="HA2-cY-wxL"/>
+                            <constraint firstItem="2Jp-U2-H07" firstAttribute="centerX" secondItem="8vs-xx-ky7" secondAttribute="centerX" id="KOX-au-E3C"/>
+                            <constraint firstItem="iqB-E2-QQf" firstAttribute="centerX" secondItem="8vs-xx-ky7" secondAttribute="centerX" id="P15-Qf-VbE"/>
+                            <constraint firstItem="2Jp-U2-H07" firstAttribute="top" secondItem="8vs-xx-ky7" secondAttribute="bottom" constant="30" id="eVl-Q4-D5q"/>
+                            <constraint firstItem="8vs-xx-ky7" firstAttribute="top" secondItem="iqB-E2-QQf" secondAttribute="bottom" constant="30" id="u8D-Up-LRm"/>
                         </constraints>
                     </view>
                 </viewController>

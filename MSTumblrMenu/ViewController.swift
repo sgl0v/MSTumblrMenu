@@ -11,8 +11,8 @@ import UIKit
 class ViewController: UIViewController {
 
     let menuTransitioningDelegate = MSTumblrMenuTransitioningDelegate()
-    private let images = [["post_type_bubble_text", "post_type_bubble_photo", "post_type_bubble_quote"], ["post_type_bubble_link", "post_type_bubble_chat", "post_type_bubble_video"]]
-    private let titles = [["Text", "Photo", "Quote"], ["Link", "Chat", "Video"]]
+    private var images: Array<Array<String>>!
+    private var titles: Array<Array<String>>!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,11 +24,22 @@ class ViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
 
-    @IBAction func showMenu(sender: UIButton) {
-        let toViewController = MSTumblrMenuViewController(collectionViewLayout: MSTumblrMenuLayout())
-        toViewController.dataSource = self
-        toViewController.delegate = self
-        self.presentViewController(toViewController, animated: true, completion: nil)
+    @IBAction func show3x2Menu(sender: UIButton) {
+        self.images = [["post_type_bubble_text", "post_type_bubble_photo", "post_type_bubble_quote"], ["post_type_bubble_link", "post_type_bubble_chat","post_type_bubble_video"]]
+        self.titles = [["Text", "Photo", "Quote"], ["Link", "Chat", "Video"]]
+        self.presentMenuController(CGSizeMake(100, 120), itemSpacing: 15.0)
+    }
+
+    @IBAction func show4x3Menu(sender: UIButton) {
+        self.images = [["post_type_bubble_text", "post_type_bubble_photo", "post_type_bubble_quote", "post_type_bubble_text"], ["post_type_bubble_link", "post_type_bubble_chat","post_type_bubble_video", "post_type_bubble_link"], ["post_type_bubble_link", "post_type_bubble_chat","post_type_bubble_video", "post_type_bubble_link"]]
+        self.titles = [["Text", "Photo", "Quote", "Text"], ["Link", "Chat", "Video", "Link"], ["Link", "Chat", "Video", "Link"]]
+        self.presentMenuController(CGSizeMake(70, 90), itemSpacing: 10.0)
+    }
+
+    @IBAction func show5x5Menu(sender: UIButton) {
+        self.images = [["post_type_bubble_text", "post_type_bubble_photo", "post_type_bubble_quote", "post_type_bubble_text", "post_type_bubble_text"], ["post_type_bubble_link", "post_type_bubble_chat","post_type_bubble_video", "post_type_bubble_link", "post_type_bubble_chat"], ["post_type_bubble_text", "post_type_bubble_photo", "post_type_bubble_quote", "post_type_bubble_text", "post_type_bubble_text"], ["post_type_bubble_text", "post_type_bubble_photo", "post_type_bubble_quote", "post_type_bubble_text", "post_type_bubble_text"], ["post_type_bubble_text", "post_type_bubble_photo", "post_type_bubble_quote", "post_type_bubble_text", "post_type_bubble_text"]]
+        self.titles = [["Text", "Photo", "Quote", "Text", "Photo"], ["Link", "Chat", "Video", "Link", "Chat"], ["Text", "Photo", "Quote", "Text", "Photo"], ["Text", "Photo", "Quote", "Text", "Photo"], ["Text", "Photo", "Quote", "Text", "Photo"]]
+        self.presentMenuController(CGSizeMake(50, 70), itemSpacing: 7.0)
     }
 
     @IBAction func unwindToViewController(sender: UIStoryboardSegue) {
@@ -39,6 +50,13 @@ class ViewController: UIViewController {
         let toViewController = segue.destinationViewController as UIViewController
         toViewController.transitioningDelegate = self.menuTransitioningDelegate
         toViewController.modalPresentationStyle = .Custom
+    }
+
+    private func presentMenuController(itemSize: CGSize, itemSpacing: CGFloat) {
+        let toViewController = MSTumblrMenuViewController(collectionViewLayout: MSTumblrMenuLayout(itemSize: itemSize, itemSpacing: itemSpacing))
+        toViewController.dataSource = self
+        toViewController.delegate = self
+        self.presentViewController(toViewController, animated: true, completion: nil)
     }
 }
 
