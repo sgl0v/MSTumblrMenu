@@ -13,7 +13,7 @@ import UIKit
 */
 class MSTumblrMenuAnimationController: NSObject {
 
-    private let kDefaultTransitionDuration = MSTumblrMenuCellAnimationConstants.duration
+    private let kDefaultAnimationDuration = 0.5
     private let presenting: Bool
 
     init(presenting: Bool) {
@@ -26,12 +26,12 @@ extension MSTumblrMenuAnimationController: UIViewControllerAnimatedTransitioning
 
     func transitionDuration(transitionContext: UIViewControllerContextTransitioning?) -> NSTimeInterval {
         guard let context = transitionContext else {
-            return kDefaultTransitionDuration
+            return MSTumblrMenuCellAnimationConstants.duration
         }
         let (menuViewController, _, _) = decomposeTransitioningContext(context)
         let numberOfSections = menuViewController.numberOfSectionsInCollectionView(menuViewController.collectionView!)
         let numberOfRows = menuViewController.collectionView(menuViewController.collectionView!, numberOfItemsInSection: 0)
-        return 3 * kDefaultTransitionDuration * Double(numberOfRows * numberOfSections)
+        return MSTumblrMenuCellAnimationConstants.delay * Double(numberOfRows * numberOfSections - 1) + MSTumblrMenuCellAnimationConstants.duration
     }
 
     func animateTransition(transitionContext: UIViewControllerContextTransitioning)  {
@@ -45,7 +45,8 @@ extension MSTumblrMenuAnimationController: UIViewControllerAnimatedTransitioning
             menuViewController.hide()
         }
 
-        UIView.animateWithDuration(self.transitionDuration(transitionContext), animations: {
+        let delay = self.presenting ? 0 : self.transitionDuration(transitionContext) - kDefaultAnimationDuration
+        UIView.animateWithDuration(kDefaultAnimationDuration, delay: delay, options: [], animations: {
             presentedControllerView.alpha = self.presenting ? 0.7 : 0
             }) {completed in
                 menuViewController.completeAnimation()

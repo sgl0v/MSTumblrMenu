@@ -109,14 +109,14 @@ class MSTumblrMenuViewController: UICollectionViewController {
     // MARK: Private
 
     private func animation(forCell cell: MSTumblrMenuCell, indexPath: NSIndexPath) -> MSTumblrMenuCellAnimation? {
-        let animationInterval = MSTumblrMenuCellAnimationConstants.duration
+        let delayInterval = MSTumblrMenuCellAnimationConstants.delay
         let numberOfSections = self.dataSource!.numberOfSectionsInTumblrMenuViewController(self)
         let numberOfRows = self.dataSource!.tumblrMenuViewController(self, numberOfRowsInSection: indexPath.section)
-        var delayInSeconds = Double(indexPath.section) * Double(numberOfRows) * animationInterval
+        var delayInSeconds = Double(indexPath.section) * Double(numberOfRows) * delayInterval
         if (indexPath.row == 0) {
-            delayInSeconds += animationInterval
+            delayInSeconds += delayInterval
         } else if (indexPath.row == numberOfRows - 1) {
-            delayInSeconds += 2 * animationInterval
+            delayInSeconds += 2.0 * delayInterval
         }
 
         let offset = CGRectGetHeight(self.collectionView!.bounds) / 2

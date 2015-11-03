@@ -10,7 +10,8 @@ import UIKit
 
 struct MSTumblrMenuCellAnimationConstants {
 
-    static let duration: NSTimeInterval = 10
+    static let duration: Double = 0.8
+    static let delay: Double = 0.1
     static let damping: CGFloat = 0.8
     static let initialSpringVelocity: CGFloat = 1.0
 }
