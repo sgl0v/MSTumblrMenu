@@ -54,6 +54,7 @@ class MSTumblrMenuViewController: UICollectionViewController {
     }
 
     private func commonInit() {
+        self.collectionView?.backgroundColor = UIColor(red: 45.0/255.0, green: 68.0/255.0, blue: 94.0/255.0, alpha: 1.0)
         self.modalPresentationStyle = .Custom
         self.transitioningDelegate = self.menuTransitioningDelegate
     }

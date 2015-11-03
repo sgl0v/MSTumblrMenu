@@ -47,7 +47,7 @@ extension MSTumblrMenuAnimationController: UIViewControllerAnimatedTransitioning
 
         let delay = self.presenting ? 0 : self.transitionDuration(transitionContext) - kDefaultAnimationDuration
         UIView.animateWithDuration(kDefaultAnimationDuration, delay: delay, options: [], animations: {
-            presentedControllerView.alpha = self.presenting ? 0.7 : 0
+            presentedControllerView.alpha = self.presenting ? 0.9 : 0
             }) {completed in
                 menuViewController.completeAnimation()
                 transitionContext.completeTransition(completed)
