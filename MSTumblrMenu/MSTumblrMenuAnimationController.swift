@@ -13,7 +13,7 @@ import UIKit
 */
 class MSTumblrMenuAnimationController: NSObject {
 
-    private let kDefaultTransitionDuration = 2.0
+    private let kDefaultTransitionDuration = MSTumblrMenuCellAnimationConstants.duration
     private let presenting: Bool
 
     init(presenting: Bool) {
@@ -25,13 +25,17 @@ class MSTumblrMenuAnimationController: NSObject {
 extension MSTumblrMenuAnimationController: UIViewControllerAnimatedTransitioning {
 
     func transitionDuration(transitionContext: UIViewControllerContextTransitioning?) -> NSTimeInterval {
-        return kDefaultTransitionDuration
+        guard let context = transitionContext else {
+            return kDefaultTransitionDuration
+        }
+        let (menuViewController, _, _) = decomposeTransitioningContext(context)
+        let numberOfSections = menuViewController.numberOfSectionsInCollectionView(menuViewController.collectionView!)
+        let numberOfRows = menuViewController.collectionView(menuViewController.collectionView!, numberOfItemsInSection: 0)
+        return 3 * kDefaultTransitionDuration * Double(numberOfRows * numberOfSections)
     }
 
     func animateTransition(transitionContext: UIViewControllerContextTransitioning)  {
-        let menuViewController = transitionContext.viewControllerForKey(self.presenting ? UITransitionContextToViewControllerKey : UITransitionContextFromViewControllerKey) as! MSTumblrMenuViewController
-        let presentedControllerView = transitionContext.viewForKey(self.presenting ? UITransitionContextToViewKey : UITransitionContextFromViewKey)!
-        let containerView = transitionContext.containerView()
+        let (menuViewController, presentedControllerView, containerView) = decomposeTransitioningContext(transitionContext)
 
         if self.presenting {
             presentedControllerView.alpha = 0
@@ -47,6 +51,13 @@ extension MSTumblrMenuAnimationController: UIViewControllerAnimatedTransitioning
                 menuViewController.completeAnimation()
                 transitionContext.completeTransition(completed)
         }
+    }
+
+    private func decomposeTransitioningContext(transitionContext: UIViewControllerContextTransitioning) -> (MSTumblrMenuViewController, UIView, UIView?) {
+        let menuViewController = transitionContext.viewControllerForKey(self.presenting ? UITransitionContextToViewControllerKey : UITransitionContextFromViewControllerKey) as! MSTumblrMenuViewController
+        let presentedControllerView = transitionContext.viewForKey(self.presenting ? UITransitionContextToViewKey : UITransitionContextFromViewKey)!
+        let containerView = transitionContext.containerView()
+        return (menuViewController, presentedControllerView, containerView)
     }
 
 }

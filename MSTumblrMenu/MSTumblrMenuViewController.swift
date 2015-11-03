@@ -109,7 +109,7 @@ class MSTumblrMenuViewController: UICollectionViewController {
     // MARK: Private
 
     private func animation(forCell cell: MSTumblrMenuCell, indexPath: NSIndexPath) -> MSTumblrMenuCellAnimation? {
-        let animationInterval = MSTumblrMenuCellAnimationConstants.duration / 10.0
+        let animationInterval = MSTumblrMenuCellAnimationConstants.duration
         let numberOfSections = self.dataSource!.numberOfSectionsInTumblrMenuViewController(self)
         let numberOfRows = self.dataSource!.tumblrMenuViewController(self, numberOfRowsInSection: indexPath.section)
         var delayInSeconds = Double(indexPath.section) * Double(numberOfRows) * animationInterval
