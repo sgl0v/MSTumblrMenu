@@ -4,12 +4,12 @@ MSTumblrMenu
 
 <br>
 
-![Alt text](https://raw.githubusercontent.com/sgl0v/MSColorPicker/master/screenshots/sample_iphone.gif)
+![Alt text](https://raw.githubusercontent.com/sgl0v/MSTumblrMenu/master/screenshots/sample_iphone.gif)
 
 ##<a name="overview"></a>Overview
 
 
-The menu component, that looks like the Tumblr one.
+The menu component, that looks like the [Tumblr](http://capptivate.co/2014/11/08/tumblr-2/) one.
 
 * Written in Swift, uses `UICollectionView`
 * Based on the View Controller Transitioning API, introduced in the iOS 7
@@ -59,7 +59,7 @@ extension ViewController: MSTumblrMenuViewControllerDelegate
 
 ## Demo
 
-Build and run the <i>MSTumblrMenu</i> project in Xcode. The demo demonstrates how to use and integrate the MSTUmblrMenu into your project.
+Build and run the <i>MSTumblrMenu</i> project in Xcode. The demo shows how to use and integrate the MSTumblrMenu into your project. As a second option, you can run the demo at [appetize.io](https://appetize.io/app/g3hyj62wbur6urgpt1wpxcfync?device=iphone5s&scale=75&orientation=portrait&osVersion=9.1).
 
 ##<a name="overview"></a>Requirements
 
