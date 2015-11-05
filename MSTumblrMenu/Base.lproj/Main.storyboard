@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
@@ -17,18 +18,12 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8vs-xx-ky7">
-                                <rect key="frame" x="280" y="285" width="39" height="33"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <state key="normal" title="4 x 3">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="show4x3Menu:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="E7Y-SR-jJX"/>
-                                </connections>
-                            </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iqB-E2-QQf">
-                                <rect key="frame" x="280" y="222" width="38" height="33"/>
+                                <rect key="frame" x="250" y="555" width="100" height="40"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="Pka-CN-vxA"/>
+                                    <constraint firstAttribute="width" constant="100" id="RXA-oB-iwR"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <state key="normal" title="3 x 2">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -37,26 +32,39 @@
                                     <action selector="show3x2Menu:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="JjY-Kd-HOG"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2Jp-U2-H07">
-                                <rect key="frame" x="281" y="348" width="38" height="33"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <state key="normal" title="5 x 5">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="show5x5Menu:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="t2P-e8-VWF"/>
-                                </connections>
-                            </button>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="screenshot.png" translatesAutoresizingMaskIntoConstraints="NO" id="0q5-rU-qiF">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="centerY" secondItem="8vs-xx-ky7" secondAttribute="centerY" constant="-1" id="Cpb-CY-Y4j"/>
-                            <constraint firstAttribute="centerX" secondItem="8vs-xx-ky7" secondAttribute="centerX" constant="1" id="HA2-cY-wxL"/>
-                            <constraint firstItem="2Jp-U2-H07" firstAttribute="centerX" secondItem="8vs-xx-ky7" secondAttribute="centerX" id="KOX-au-E3C"/>
-                            <constraint firstItem="iqB-E2-QQf" firstAttribute="centerX" secondItem="8vs-xx-ky7" secondAttribute="centerX" id="P15-Qf-VbE"/>
-                            <constraint firstItem="2Jp-U2-H07" firstAttribute="top" secondItem="8vs-xx-ky7" secondAttribute="bottom" constant="30" id="eVl-Q4-D5q"/>
-                            <constraint firstItem="8vs-xx-ky7" firstAttribute="top" secondItem="iqB-E2-QQf" secondAttribute="bottom" constant="30" id="u8D-Up-LRm"/>
+                            <constraint firstItem="0q5-rU-qiF" firstAttribute="height" secondItem="kh9-bI-dsS" secondAttribute="height" id="7hE-nr-jne"/>
+                            <constraint firstItem="iqB-E2-QQf" firstAttribute="top" secondItem="0q5-rU-qiF" secondAttribute="bottom" id="GHY-kj-Zjs"/>
+                            <constraint firstItem="0q5-rU-qiF" firstAttribute="centerY" secondItem="kh9-bI-dsS" secondAttribute="centerY" id="Ong-vp-O5J"/>
+                            <constraint firstItem="jyV-Pf-zRb" firstAttribute="bottom" secondItem="0q5-rU-qiF" secondAttribute="top" id="TPF-KN-9UQ"/>
+                            <constraint firstAttribute="width" secondItem="0q5-rU-qiF" secondAttribute="height" multiplier="1:1" id="TPt-X8-Qmg"/>
+                            <constraint firstItem="0q5-rU-qiF" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" id="VAw-Lt-O6s"/>
+                            <constraint firstItem="0q5-rU-qiF" firstAttribute="centerY" secondItem="kh9-bI-dsS" secondAttribute="centerY" id="Wjv-fB-hQW"/>
+                            <constraint firstItem="0q5-rU-qiF" firstAttribute="width" secondItem="kh9-bI-dsS" secondAttribute="width" id="ZNW-2l-CCJ"/>
+                            <constraint firstAttribute="trailing" secondItem="0q5-rU-qiF" secondAttribute="trailing" id="fFV-Zq-P4v"/>
+                            <constraint firstItem="0q5-rU-qiF" firstAttribute="centerX" secondItem="kh9-bI-dsS" secondAttribute="centerX" id="jcC-yK-DMG"/>
+                            <constraint firstItem="0q5-rU-qiF" firstAttribute="top" secondItem="jyV-Pf-zRb" secondAttribute="bottom" id="jsX-Iy-ZRD"/>
+                            <constraint firstItem="iqB-E2-QQf" firstAttribute="centerX" secondItem="kh9-bI-dsS" secondAttribute="centerX" id="pnv-Zf-HUL"/>
+                            <constraint firstItem="2fi-mo-0CV" firstAttribute="top" secondItem="0q5-rU-qiF" secondAttribute="bottom" id="wpx-zO-X7M"/>
+                            <constraint firstItem="2fi-mo-0CV" firstAttribute="top" secondItem="iqB-E2-QQf" secondAttribute="bottom" constant="5" id="x9N-Dp-gBe"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="TPF-KN-9UQ"/>
+                                <exclude reference="TPt-X8-Qmg"/>
+                                <exclude reference="VAw-Lt-O6s"/>
+                                <exclude reference="Wjv-fB-hQW"/>
+                                <exclude reference="fFV-Zq-P4v"/>
+                                <exclude reference="jsX-Iy-ZRD"/>
+                                <exclude reference="wpx-zO-X7M"/>
+                                <exclude reference="GHY-kj-Zjs"/>
+                            </mask>
+                        </variation>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
@@ -64,4 +72,7 @@
             <point key="canvasLocation" x="273" y="466"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="screenshot.png" width="383" height="679"/>
+    </resources>
 </document>

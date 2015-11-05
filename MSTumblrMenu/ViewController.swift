@@ -27,7 +27,11 @@ class ViewController: UIViewController {
     @IBAction func show3x2Menu(sender: UIButton) {
         self.images = [["post_type_bubble_text", "post_type_bubble_photo", "post_type_bubble_quote"], ["post_type_bubble_link", "post_type_bubble_chat","post_type_bubble_video"]]
         self.titles = [["Text", "Photo", "Quote"], ["Link", "Chat", "Video"]]
-        self.presentMenuController(CGSizeMake(100, 120), itemSpacing: 15.0)
+        let rows : CGFloat = 3
+        let width = CGRectGetWidth(self.view.bounds);
+        let itemSpacing : CGFloat = 15
+        let cellWidth = (width - itemSpacing * (rows + 1)) / rows
+        self.presentMenuController(CGSizeMake(cellWidth, cellWidth + 20), itemSpacing: itemSpacing)
     }
 
     @IBAction func show4x3Menu(sender: UIButton) {
