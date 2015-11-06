@@ -40,6 +40,8 @@ extension MSTumblrMenuAnimationController: UIViewControllerAnimatedTransitioning
         if self.presenting {
             presentedControllerView.alpha = 0
             containerView!.addSubview(presentedControllerView)
+            presentedControllerView.frame = containerView!.bounds
+            presentedControllerView.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
             menuViewController.show()
         } else {
             menuViewController.hide()
